@@ -25,6 +25,8 @@ class Cluster:
         self.pre_reserve_goal = 0
         self.pre_reserve_job_id = ""
 
+        self.alpha = 0.8
+
     def make_offers(self):
         # return the available resources to the framework scheduler
         return self.vacant_machine_list
@@ -34,12 +36,13 @@ class Cluster:
 #                offer_list.append(machine)
 #        return offer_list
 
-    def clear_reservation(self, job_id):
-        for machineid in self.jobIdToReservedMachineId[job_id]:
+    def clear_reservation(self, job):
+        for machineid in self.jobIdToReservedMachineId[job.id]:
             self.open_machine_number += 1
 #            print "machineid:",machineid
             self.machines[machineid].is_reserved = -1
-            self.jobIdToReservedNumber[job_id] -= 1
+            self.jobIdToReservedNumber[job.id] -= 1
+            job.allocated -= 1
 
     def set_reservation(self, machineid, task, job_id='-1'):
 #        print "set reservation", machineid, "task", task.id, task.stage_id,"-", task.is_initial,"offer size:", len(self.make_offers()),"open machine number", self.open_machine_number
@@ -62,6 +65,7 @@ class Cluster:
             self.vacant_machine_list.remove(machineId)
         if self.machines[machineId].is_reserved == -1:
             self.open_machine_number -= 1
+            task.stage.job.alloc += 1
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
 
@@ -114,5 +118,108 @@ class Cluster:
         for machine in self.machines:
             machine.reset()
 
+    def calculate_fairAlloc(self):
+        # to be completed: calculate the targetAlloc of all jobs in the running_jobs list
+        jobList = [job for job in self.running_jobs]
+        totalResources = float(self.machine_number)
+        totalWeight = sum([j.weight for j in jobList])
+        jobList.sort(key=lambda i: i.nDemand)
+        for i in range(0, len(jobList)):
+            jobList[i].fairAlloc = 0.0
+        for i in range(0, len(jobList)):
+            if totalResources <= 0:
+                break
+            if jobList[i].nDemand * totalWeight < totalResources:
+                totalResources -= jobList[i].nDemand * totalWeight
+                for j in range(i, len(jobList)):
+                    jobList[j].fairAlloc += jobList[i].nDemand * jobList[j].weight
+                    jobList[j].nDemand -= jobList[i].nDemand
+            else:
+                for j in range(i, len(jobList)):
+                    jobList[j].fairAlloc += totalResources / totalWeight * jobList[j].weight
+                    jobList[j].nDemand -= totalResources / totalWeight
+                totalResources = 0.0
+        for i in range(0, len(jobList)):
+            jobList[i].nDemand = len(jobList[i].curve) / jobList[i].weight
+            jobList[i].targetAlloc = jobList[i].fairAlloc
+            jobList[i].update_slope()
 
+    def calculate_targetAlloc(self):
+        jobList = [job for job in self.running_jobs]
+        print len(jobList)
+        self.calculate_fairAlloc()
+        if len(jobList) == 0:
+            return
+        if len(jobList) == 1:
+            jobList[0].targetAlloc = float(self.machine_number)
+        for j in jobList:
+            j.get_min_alloc()
+        setG = list()
+        setH = list()
+        setQ = list()
+        min_lSJob = min(jobList, key=lambda x: x.lSlope)
+        setG.append(min_lSJob)
+        jobList.remove(min_lSJob)
+        if len(jobList) == 0:
+            return
+        max_rSJob = max(jobList, key=lambda x: x.rSlope)
+        setH.append(max_rSJob)
+        jobList.remove(max_rSJob)
 
+        while len(jobList) != 0:
+            lMax = min(jobList, key=lambda x: x.lSlope).lSlope
+            rMin = max(jobList, key=lambda x: x.rSlope).rSlope
+            s = True
+            stopCase_G = 0
+            stopCase_H = 0
+            while s:
+                shallDoAjustment = True
+                tmpGiverJob = min(setG, key=lambda x: x.lSlope)
+                if tmpGiverJob.lSlope > lMax:
+                    s = False
+                    stopCase_G = 1
+                    shallDoAjustment = False
+                if tmpGiverJob.targetAlloc == tmpGiverJob.minAlloc:
+                    setG.remove(tmpGiverJob)
+                    setQ.append(tmpGiverJob)
+                    shallDoAjustment = False
+                    if len(setG) == 0:
+                        s = False
+                        stopCase_G = 1
+                tmpGainJob = max(setH, key=lambda x: x.rSlope)
+                if tmpGainJob.rSlope < rMin:
+                    s = False
+                    stopCase_H = 1
+                    shallDoAjustment = False
+                if shallDoAjustment:
+                    tmpGiverJob.targetAlloc -= 1
+                    tmpGainJob.targetAlloc += 1
+                    tmpGiverJob.update_slope()
+                    tmpGainJob.update_slope()
+            if stopCase_G == 1:
+                min_lSJob = min(jobList, key=lambda x: x.lSlope)
+                setG.append(min_lSJob)
+                jobList.remove(min_lSJob)
+            if stopCase_H == 1 and len(jobList) > 0:
+                max_rSJob = max(jobList, key=lambda x: x.rSlope)
+                setH.append(max_rSJob)
+                jobList.remove(max_rSJob)
+        s = True
+        while s:
+            tmpGiverJob = min(setG, key=lambda x: x.lSlope)
+            tmpGainJob = max(setH, key=lambda x: x.rSlope)
+            shallDoAjustment = True
+            if tmpGiverJob.lSlope >= tmpGainJob.rSlope:
+                s = False
+                shallDoAjustment = False
+            if tmpGiverJob.targetAlloc == tmpGiverJob.minAlloc:
+                setG.remove(tmpGiverJob)
+                setQ.append(tmpGiverJob)
+                shallDoAjustment = False
+                if len(setG) == 0:
+                    s = False
+            if shallDoAjustment:
+                tmpGiverJob.targetAlloc -= 1
+                tmpGainJob.targetAlloc += 1
+                tmpGiverJob.update_slope()
+                tmpGainJob.update_slope()

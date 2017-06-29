@@ -52,7 +52,12 @@ class Scheduler:
         else:
             return False
 
+    def sort_tasks(self):
+        sorted(self.task_buffer, key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
+        return
+
     def do_allocate(self, time):
+        self.sort_tasks()
         # chen: this part needs to be modified finely. Move the scheduling part from cluster.py to this function
         # achieve data locality with a heartbeat function; achieve locality with stage.locality_preference.
         # function1: sort the tasks according to the priority
@@ -118,7 +123,7 @@ class Scheduler:
 
     def submit_job(self, job):  # upon submission of a job, find the stages that are ready to be submitted
         self.cluster.running_jobs.append(job)
-
+        self.cluster.calculate_targetAlloc()
         # DAG not allowed
         ready_stages = job.stages[0]
         self.ready_stages.append(job.stages[0])
@@ -128,14 +133,12 @@ class Scheduler:
         # return [EventStageSubmit(time, stage) for stage in ready_stages]
 
     def submit_stage(self, stage, time):  # upon submission of a stage, all the tasks in the stage are ready to be submitted. Submit as many tasks as possible
-
         this_job = stage.job
         if stage.priority == 0:
             tmp = stage.taskset + self.task_buffer
             self.task_buffer = tmp
         else:
             self.task_buffer += stage.taskset
-
         # add by cc
         if len(stage.parent_ids) == 0:
             self.stageIdToAllowedMachineId[stage.id] = range(self.cluster.machine_number)
@@ -146,7 +149,6 @@ class Scheduler:
                 tmpList += self.stageIdToUsedMachineId[id]
             # tmpList = list(set(tmpList))
             self.stageIdToAllowedMachineId[stage.id] = tmpList
-
         this_job.submitted_stage_ids.append(stage.id)
         self.submitted_stages_number += 1
         msg = self.do_allocate(time)
@@ -164,24 +166,21 @@ class Scheduler:
         else:
             if len(stage.job.stages) == len(stage.job.completed_stage_ids):
                 msg.append(stage.job)
-
         # after one stage completes, we shall update the ids of machines that have been used for executing the tasks within the stage
         tmpMachineList = list()
         for task in stage.taskset:
             tmpMachineList.append(task.machine_id)
         tmpMachineList = list(set(tmpMachineList))
         self.stageIdToUsedMachineId[stage.id] = tmpMachineList
-        #if int(stage.job_id.split("_")[-1]) == 10000:
-        #    print "tmpMachineList:", tmpMachineList
         if stage.job.service_type == 0:
             machinelist = [task.machine_id for task in stage.taskset]
             machinelist = list(set(machinelist))
             print "stage complete:", stage.id, "stage tasknum:", len(stage.taskset), "used machine number:", len(machinelist)
-
         return msg
 
     def handle_job_completion(self, job):
         self.cluster.running_jobs.remove(job)
+        self.cluster.calculate_targetAlloc()
 
     def find_ready_stages(self):
         #completed_stages = np.copy(self.completed_stage_ids) # completed in previous jobs
@@ -207,3 +206,4 @@ class Scheduler:
                 if core.running_task == task:
                     return core
         return False
+

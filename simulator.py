@@ -138,8 +138,6 @@ class Simulator:
 
             elif isinstance(event, EventStageSubmit):
                 event.stage.submit_time = event.time
-#                print 'Stage %s submitted at %s' %(event.stage.id, event.time)
-#                print "     Current idle machine number: ", len(self.cluster.make_offers()), "open machine number:", self.cluster.open_machine_number
                 if event.stage.job.service_type == self.cluster.foreground_type:
                     print "reserved for this stage:", self.cluster.jobIdToReservedNumber[event.stage.job_id]
                 msg = self.scheduler.submit_stage(event.stage, event.time)
@@ -166,42 +164,11 @@ class Simulator:
                 event.task.has_completed = True
                 self.scheduler.stageIdToAllowedMachineId[event.task.stage_id].append(event.task.machine_id)
                 self.cluster.release_task(event.task)
-                sign = 1
-                if event.task.is_initial:
-                    event.task.stage.not_completed_tasks.remove(event.task)
-                    event.task.stage.completed_tasks.append(event.task)
-                    if len(event.task.stage.not_completed_tasks) == 0:
-                        new_events.append(EventStageComplete(event.time, event.task.stage))
-                    if self.cluster.straggler_mitigation_enabled:
-                        if event.task.stage.job.service_type <> self.cluster.foreground_type:
-                            sign = 0
-                        elif len(event.task.stage.not_submitted_tasks) != 0:
-                            sign = 0
-                        elif event.task.stage.has_done_speculation:
-                            sign = 0
-                        elif len(event.task.stage.not_completed_tasks) > self.cluster.jobIdToReservedNumber[event.task.job_id]:
-                            sign = 0
-                        elif len(event.task.stage.not_completed_tasks) > len(event.task.stage.taskset)/2:
-                            sign = 0
-                        elif len(event.task.stage.taskset) == 1:
-                            sign = 0
-                        if sign == 1:
-                            tmpList = []
-                            for task in event.task.stage.not_completed_tasks:
-                                taskruntime = task.stage.taskset[int(random.random()*(len(task.stage.taskset)-1))].runtime
-                                task.peer = Task(task.job_id, task.stage_id, task.id, task.index, taskruntime, task.timeout, task.priority)
-                                task.peer.is_initial = False
-                                task.peer.stage = task.stage
-                                task.peer.peer = task
-                                tmpList.append(task.peer)
-                                # TODO: set the task runtime here
-                            self.scheduler.task_buffer = tmpList + self.scheduler.task_buffer
-                            event.task.stage.has_done_speculation = True
-                        if event.task.peer and not event.task.peer.has_completed:
-                            new_events.append(EventTaskComplete(event.time, event.task.peer, event.task.peer.machine_id))
-                else:
-                    if event.task.peer and not event.task.peer.has_completed:
-                        new_events.append(EventTaskComplete(event.time, event.task.peer, event.task.peer.machine_id))
+                event.task.stage.not_completed_tasks.remove(event.task)
+                event.task.stage.completed_tasks.append(event.task)
+                if len(event.task.stage.not_completed_tasks) == 0:
+                    new_events.append(EventStageComplete(event.time, event.task.stage))
+
                 msg = self.scheduler.do_allocate(event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
@@ -215,7 +182,6 @@ class Simulator:
                     stageSlots = set()
                     for i in event.stage.taskset:
                         stageSlots.add(i.machine_id)
-
                     print "stage finish: ", event.stage.id, "used slots number:", len(stageSlots), "submit interval", event.stage.last_task_submit_time - event.stage.submit_time, "currently reserved for this job:", self.cluster.jobIdToReservedNumber[event.stage.job.id]
                     event.stage.finish_time = event.time
                     self.stage_durations[event.stage.id] = {}
@@ -233,7 +199,7 @@ class Simulator:
 
             elif isinstance(event, EventJobComplete):
                 if event.job.service_type == self.cluster.foreground_type:
-                    self.cluster.clear_reservation(event.job.id)
+                    self.cluster.clear_reservation(event.job)
                 event.job.completion_time = event.time
                 event.job.duration = event.time - event.job.submit_time
                 self.scheduler.handle_job_completion(event.job)
@@ -293,6 +259,7 @@ class Simulator:
         job_submit_time = dict()
         job_priority = dict()
         job_service_type = dict()
+        job_curveString = dict()
         print "enter generate_job_profile"
 
         stageIdToParallelism = dict()
@@ -301,6 +268,7 @@ class Simulator:
             job_submit_time[int(c_job_id)] = self.job_profile[c_job_id]["Submit Time"]
             job_priority[int(c_job_id)] = self.job_profile[c_job_id]["Priority"]
             job_service_type[int(c_job_id)] = self.job_profile[c_job_id]["Service Type"]
+            job_curveString[int(c_job_id)] = self.job_profile[c_job_id]["curve"]
 
         for stage_id in self.stage_profile:
             timeout_type = 0
@@ -365,6 +333,7 @@ class Simulator:
                 if job.service_type == self.cluster.foreground_type:
                     self.cluster.jobIdToReservedNumber[job.id] = 0
                     self.cluster.jobIdToReservedMachineId[job.id] = set()
+                job.set_curve(job_curveString[job_id])
                 self.job_list[user_id].append(job)
                 stage.priority = job.priority
                 stage.job = job

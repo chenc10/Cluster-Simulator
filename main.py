@@ -13,6 +13,7 @@ from math import pow
 
 user_number = 1
 machine_number = 4000
+machine_number = 32
 core_number = 1
 json_dir = "./"
 
