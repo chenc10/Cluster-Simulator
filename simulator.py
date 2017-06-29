@@ -124,13 +124,15 @@ class Simulator:
             new_events = list()
             if isinstance(event, EventReAlloc):
                 msg = self.scheduler.do_allocate(event.time)
-                if self.scheduler.check_waiting():
+                # if len(self.cluster.finished_jobs) < len(self.job_list[0]) or self.scheduler.check_waiting():
+                if len(self.cluster.finished_jobs) < len(self.job_list[0]):
                     new_events.append(EventReAlloc(event.time + 1000))
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
                     new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
 
             if isinstance(event, EventJobSubmit):
+                print "yes!------"
                 current_job_index[event.job.user_id] = event.job.index
                 ready_stages = self.scheduler.submit_job(event.job)
                 for stage in ready_stages:
@@ -149,6 +151,7 @@ class Simulator:
                             ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventTaskSubmit):
+                print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if self.cluster.straggler_mitigation_enabled:
                     if event.task.is_initial:
                         event.task.stage.not_submitted_tasks.remove(event.task)
@@ -159,6 +162,7 @@ class Simulator:
                 continue
 
             elif isinstance(event, EventTaskComplete):
+                print "time", event.time, "   finish task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if event.task.has_completed:
                     continue
                 event.task.has_completed = True
@@ -198,13 +202,13 @@ class Simulator:
                 #print "#####  time:", event.time, "stage completion", event.stage.id, event.stage.job_id
 
             elif isinstance(event, EventJobComplete):
-                if event.job.service_type == self.cluster.foreground_type:
-                    self.cluster.clear_reservation(event.job)
                 event.job.completion_time = event.time
                 event.job.duration = event.time - event.job.submit_time
+                print "-", event.job.id, " (job) finishes, duration", event.job.duration, " job.alloc ", event.job.alloc
+#                print "     Current idle machine number: ", len(self.cluster.make_offers()), "open machine number:", self.cluster.open_machine_number
+                if event.job.service_type == self.cluster.foreground_type:
+                    self.cluster.clear_reservation(event.job)
                 self.scheduler.handle_job_completion(event.job)
-                print "-", event.job.id, " (job) finishes, duration", event.job.duration
-                print "     Current idle machine number: ", len(self.cluster.make_offers()), "open machine number:", self.cluster.open_machine_number
                 self.job_durations[int(event.job.id.split("_")[-1])] = event.job.duration
 
             for new_event in new_events:

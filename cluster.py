@@ -10,6 +10,7 @@ class Cluster:
         self.machine_number = len(machines)
         self.machines = machines
         self.running_jobs = list()
+        self.finished_jobs = list()
         self.is_vacant = True
 #        self.task_map = dict() # map: (task_id, machine_number)
         self.Memory_Disk_Ratio = 3  # ratio of the speed in reading from memory and disk
@@ -42,7 +43,7 @@ class Cluster:
 #            print "machineid:",machineid
             self.machines[machineid].is_reserved = -1
             self.jobIdToReservedNumber[job.id] -= 1
-            job.allocated -= 1
+            job.alloc -= 1
 
     def set_reservation(self, machineid, task, job_id='-1'):
 #        print "set reservation", machineid, "task", task.id, task.stage_id,"-", task.is_initial,"offer size:", len(self.make_offers()),"open machine number", self.open_machine_number
@@ -66,6 +67,7 @@ class Cluster:
         if self.machines[machineId].is_reserved == -1:
             self.open_machine_number -= 1
             task.stage.job.alloc += 1
+            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
 
@@ -146,7 +148,6 @@ class Cluster:
 
     def calculate_targetAlloc(self):
         jobList = [job for job in self.running_jobs]
-        print len(jobList)
         self.calculate_fairAlloc()
         if len(jobList) == 0:
             return
@@ -223,3 +224,9 @@ class Cluster:
                 tmpGainJob.targetAlloc += 1
                 tmpGiverJob.update_slope()
                 tmpGainJob.update_slope()
+
+        jobList = [job for job in self.running_jobs]
+        print "get targetAlloc: ",
+        for j in jobList:
+            print "id-" + str(j.id) + "-alloc-" + str(j.targetAlloc),
+        print

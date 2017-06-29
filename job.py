@@ -38,8 +38,6 @@ class Job:
 
     def set_curve(self, curveString):
         self.curve = [float(i) for i in curveString.split("-")]
-        print self.curve
-        print len(self.curve)
         self.demand = float(len(self.curve) - 1)
         # initialize the targetAlloc in case the comparison error
         self.targetAlloc = self.demand
@@ -57,8 +55,6 @@ class Job:
 
     def update_slope(self):
         self.lSlope = self.lSlopeArray[int(self.targetAlloc)]
-        print self.targetAlloc
-        print len(self.rSlopeArray)
         self.rSlope = self.rSlopeArray[int(self.targetAlloc)]
 
     def get_min_alloc(self):

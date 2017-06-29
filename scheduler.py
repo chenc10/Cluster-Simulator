@@ -47,13 +47,14 @@ class Scheduler:
         self.task_buffer.remove(task)
 
     def check_waiting(self):
+        print "check_waiting:", len(self.task_buffer)
         if len(self.task_buffer) > 0:
             return True
         else:
             return False
 
     def sort_tasks(self):
-        sorted(self.task_buffer, key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
+        self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
         return
 
     def do_allocate(self, time):
@@ -82,6 +83,7 @@ class Scheduler:
             t = 0
             for machineId in self.cluster.make_offers():
                 t += 1
+#                print "taskid", task.id, "job", task.job_id, "machineid", machineId, "is_reserved", self.cluster.machines[machineId].is_reserved
                 if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
                     continue
 #                print "enter inner 1", task.id, machineId
@@ -181,6 +183,7 @@ class Scheduler:
     def handle_job_completion(self, job):
         self.cluster.running_jobs.remove(job)
         self.cluster.calculate_targetAlloc()
+        self.cluster.finished_jobs.append(job)
 
     def find_ready_stages(self):
         #completed_stages = np.copy(self.completed_stage_ids) # completed in previous jobs
