@@ -22,3 +22,12 @@ class Stage:
         # unfinished, for locality maintaining.
         self.job = None
         self.has_done_speculation = False
+
+    def handle_stage_submission(self):
+        return
+
+    def reset(self):
+        self.not_submitted_tasks = self.taskset
+        self.not_completed_tasks = self.taskset
+        self.completed_tasks = list()
+

@@ -29,6 +29,7 @@ class Scheduler:
         self.pre_reserve_threshold = 0.5
 
         self.pending_stages = list()
+        self.scheduler_type = "fair"
 #        self.taskIdToAllowedMachineId = dict()
 
     def task_buffer_insert(self, taskset):
@@ -54,10 +55,14 @@ class Scheduler:
             return False
 
     def sort_tasks(self):
-        self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
+        if self.scheduler_type == "fair":
+            self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.weight)
+        else:
+            self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
         return
 
     def do_allocate(self, time):
+        print "enter do_allocate, task_buffer size: ", len(self.task_buffer)
         self.sort_tasks()
         # chen: this part needs to be modified finely. Move the scheduling part from cluster.py to this function
         # achieve data locality with a heartbeat function; achieve locality with stage.locality_preference.
@@ -69,7 +74,7 @@ class Scheduler:
         if self.cluster.open_machine_number == 0 and self.task_buffer[0].stage.job.service_type <> self.cluster.foreground_type:
             return msg
         for task in self.task_buffer:
-#            print " make_offers():", len(self.cluster.make_offers()), "open number:", self.cluster.open_machine_number
+            print " make_offers():", len(self.cluster.make_offers()), "open number:", self.cluster.open_machine_number
             if len(self.cluster.make_offers()) == 0:
                 for item in msg:
                     self.task_buffer.remove(item[0])
@@ -86,16 +91,20 @@ class Scheduler:
 #                print "taskid", task.id, "job", task.job_id, "machineid", machineId, "is_reserved", self.cluster.machines[machineId].is_reserved
                 if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
                     continue
-#                print "enter inner 1", task.id, machineId
+                if self.cluster.isDebug:
+                    print "enter inner 1", task.id, machineId
                 sign = True
                 if machineId in self.stageIdToAllowedMachineId[task.stage.id]:
                     task.machine_id = machineId
-                    self.cluster.assign_task(machineId, task)
+                    self.cluster.assign_task(machineId, task, time)
 #                    self.cluster.task_map[task.id] = machineId
                     self.cluster.check_if_vacant()
                     success = True
                     msg.append((task, machineId, task.runtime))
                     break
+            if self.cluster.isDebug:
+                print "leave inner 1", task.id, machineId, self.cluster.open_machine_number
+                print [[i.is_reserved, i.is_vacant] for i in self.cluster.machines]
             if success == False and sign == True:
                 # if locality requirement is not achieved.
                 # first check whether time out
@@ -111,14 +120,15 @@ class Scheduler:
                             else:
                                 task.runtime = task.runtime * 1
 #                                task.runtime = task.runtime * 5
-                            self.cluster.assign_task(machineId, task)
+                            self.cluster.assign_task(machineId, task, time)
 #                            self.cluster.task_map[task.id] = machineId
                             self.cluster.check_if_vacant()
                             msg.append((task, machineId, task.runtime))
                             break
                 else:
                     task.first_attempt_time = time
-#            print time, task.id, task.stage_id, task.is_initial, "success:", success, "sign:",sign
+            if self.cluster.isDebug:
+                print time, task.id, task.stage_id, task.is_initial, "success:", success, "sign:",sign
         for item in msg:
             self.task_buffer.remove(item[0])
         return msg

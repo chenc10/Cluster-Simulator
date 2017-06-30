@@ -23,3 +23,9 @@ class Task:
 #        self.produced_blocks = produced_blocks
         #self.required_blocks = list()
         #self.required_shuffle_rdds = list()
+
+    def handle_task_submission(self, machineid, time):
+        self.stage.not_submitted_tasks.remove(self)
+        self.stage.not_completed_tasks.append(self)
+        if len(self.stage.not_submitted_tasks) == 0:
+            self.stage.last_task_submit_time = time

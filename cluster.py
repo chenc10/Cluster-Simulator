@@ -3,6 +3,7 @@ from task import Task
 #from block_manager import BlockManager
 from machine import Machine
 
+DEBUG = False
 
 class Cluster:
 
@@ -27,6 +28,9 @@ class Cluster:
         self.pre_reserve_job_id = ""
 
         self.alpha = 0.8
+        self.accelerate_factor = 1.0
+
+        self.isDebug = False
 
     def make_offers(self):
         # return the available resources to the framework scheduler
@@ -57,7 +61,7 @@ class Cluster:
             self.jobIdToReservedMachineId[job_id].add(machineid)
             self.machines[machineid].is_reserved = job_id
 
-    def assign_task(self, machineId, task):
+    def assign_task(self, machineId, task, time):
         if self.machines[machineId].is_reserved > -1:
             if task.job_id <> self.machines[machineId].is_reserved:
                 print "Error! error! task.jobid:", task.job_id, task.stage_id, "machine reserved for:", self.machines[machineId].is_reserved
@@ -67,7 +71,9 @@ class Cluster:
         if self.machines[machineId].is_reserved == -1:
             self.open_machine_number -= 1
             task.stage.job.alloc += 1
-            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
+            if task.stage.job.alloc == 1:
+                task.stage.job.start_execution_time = time
+#            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
 
@@ -121,17 +127,20 @@ class Cluster:
             machine.reset()
 
     def calculate_fairAlloc(self):
+#        print "enter calculate"
         # to be completed: calculate the targetAlloc of all jobs in the running_jobs list
-        jobList = [job for job in self.running_jobs]
+        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
         totalResources = float(self.machine_number)
         totalWeight = sum([j.weight for j in jobList])
         jobList.sort(key=lambda i: i.nDemand)
         for i in range(0, len(jobList)):
             jobList[i].fairAlloc = 0.0
         for i in range(0, len(jobList)):
+#            print "enter fair:", i, "jobList[i].nDemand:", jobList[i].nDemand, jobList[i].weight, totalResources
             if totalResources <= 0:
                 break
             if jobList[i].nDemand * totalWeight < totalResources:
+#                print "totalWeight:", totalWeight
                 totalResources -= jobList[i].nDemand * totalWeight
                 for j in range(i, len(jobList)):
                     jobList[j].fairAlloc += jobList[i].nDemand * jobList[j].weight
@@ -142,19 +151,20 @@ class Cluster:
                     jobList[j].nDemand -= totalResources / totalWeight
                 totalResources = 0.0
         for i in range(0, len(jobList)):
-            jobList[i].nDemand = len(jobList[i].curve) / jobList[i].weight
+            jobList[i].nDemand = jobList[i].demand/ jobList[i].weight
             jobList[i].targetAlloc = jobList[i].fairAlloc
+#            print "result: ", i, jobList[i].id, jobList[i].targetAlloc
             jobList[i].update_slope()
 
     def calculate_targetAlloc(self):
-        jobList = [job for job in self.running_jobs]
+        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
         self.calculate_fairAlloc()
         if len(jobList) == 0:
             return
         if len(jobList) == 1:
             jobList[0].targetAlloc = float(self.machine_number)
         for j in jobList:
-            j.get_min_alloc()
+            j.get_min_alloc(self.alpha)
         setG = list()
         setH = list()
         setQ = list()
@@ -180,7 +190,7 @@ class Cluster:
                     s = False
                     stopCase_G = 1
                     shallDoAjustment = False
-                if tmpGiverJob.targetAlloc == tmpGiverJob.minAlloc:
+                if tmpGiverJob.targetAlloc <= tmpGiverJob.minAlloc:
                     setG.remove(tmpGiverJob)
                     setQ.append(tmpGiverJob)
                     shallDoAjustment = False
@@ -192,6 +202,13 @@ class Cluster:
                     s = False
                     stopCase_H = 1
                     shallDoAjustment = False
+#                print "======check: ", tmpGiverJob.id, tmpGainJob.id, tmpGainJob.targetAlloc, tmpGainJob.demand
+                if tmpGainJob.targetAlloc >= tmpGainJob.demand:
+                    setH.remove(tmpGainJob)
+                    shallDoAjustment = False
+                    if len(setH) == 0:
+                        s = False
+                        stopCase_H = 1
                 if shallDoAjustment:
                     tmpGiverJob.targetAlloc -= 1
                     tmpGainJob.targetAlloc += 1
@@ -206,6 +223,7 @@ class Cluster:
                 setH.append(max_rSJob)
                 jobList.remove(max_rSJob)
         s = True
+#        print "---calculate: second phase"
         while s:
             tmpGiverJob = min(setG, key=lambda x: x.lSlope)
             tmpGainJob = max(setH, key=lambda x: x.rSlope)
@@ -213,11 +231,16 @@ class Cluster:
             if tmpGiverJob.lSlope >= tmpGainJob.rSlope:
                 s = False
                 shallDoAjustment = False
-            if tmpGiverJob.targetAlloc == tmpGiverJob.minAlloc:
+            if tmpGiverJob.targetAlloc <= tmpGiverJob.minAlloc:
                 setG.remove(tmpGiverJob)
                 setQ.append(tmpGiverJob)
                 shallDoAjustment = False
                 if len(setG) == 0:
+                    s = False
+            if tmpGainJob.targetAlloc >= tmpGainJob.demand:
+                setH.remove(tmpGainJob)
+                shallDoAjustment = False
+                if len(setH) == 0:
                     s = False
             if shallDoAjustment:
                 tmpGiverJob.targetAlloc -= 1
@@ -225,7 +248,7 @@ class Cluster:
                 tmpGiverJob.update_slope()
                 tmpGainJob.update_slope()
 
-        jobList = [job for job in self.running_jobs]
+        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
         print "get targetAlloc: ",
         for j in jobList:
             print "id-" + str(j.id) + "-alloc-" + str(j.targetAlloc),

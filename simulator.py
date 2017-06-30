@@ -55,14 +55,10 @@ class Simulator:
             application_number = user_index + 1
             application_name = Simulator.application[application_number]
             self.app_map[user_index] = application_number
-            stage_profile_path = '%s/%s/stage_profile.json' % (json_dir, application_name)
-            if not os.path.exists(stage_profile_path):
-                print('Error: can not find %s/stage_profile.json' % application_name)
-                print stage_profile_path
-                exit(-1)
-            else:
-                self.stage_profile = json.load(open(stage_profile_path, 'r'), object_pairs_hook=OrderedDict)
-                print "stage_profile loaded"
+#            stage_profile_path = 'Workloads/stage_profile.json' % (json_dir, application_name)
+            stage_profile_path = "Workloads/stage_profile.json"
+            self.stage_profile = json.load(open(stage_profile_path, 'r'), object_pairs_hook=OrderedDict)
+            print "stage_profile loaded"
 
 #            rdd_profile_path = '%s/%s/rdd_profile.json' % (json_dir, application_name )
 #            if not os.path.exists(rdd_profile_path):
@@ -71,22 +67,15 @@ class Simulator:
 #            else:
 #                self.rdd_profile = json.load(open(rdd_profile_path, 'r'), object_pairs_hook=OrderedDict)
 
-            runtime_path = '%s/%s/runtime.json' % (json_dir, application_name)  #runtime of each task when the input data is read from Memory
-            if not os.path.exists(runtime_path):
-                print('Error: can not find %s/runtime.json' % application_name)
-                exit(-1)
-            else:
-                self.runtime_profile = json.load(open(runtime_path, 'r'), object_pairs_hook=OrderedDict)
-                print "runtime_profile loaded"
+#            runtime_path = '%s/%s/runtime.json' % (json_dir, application_name)  #runtime of each task when the input data is read from Memory
+            runtime_path = "Workloads/runtime.json"
+            self.runtime_profile = json.load(open(runtime_path, 'r'), object_pairs_hook=OrderedDict)
+            print "runtime_profile loaded"
 #            self.generate_rdd_profile(user_index)
 
-            job_path = '%s/%s/job.json' % (json_dir, application_name)  #runtime of each task when the input data is read from Memory
-            if not os.path.exists(job_path):
-                print('Error: can not find %s/job.json' % application_name)
-                exit(-1)
-            else:
-                self.job_profile = json.load(open(job_path, 'r'), object_pairs_hook=OrderedDict)
-                print "job_profile loaded"
+            job_path = "Workloads/job.json"
+            self.job_profile = json.load(open(job_path, 'r'), object_pairs_hook=OrderedDict)
+            print "job_profile loaded"
             self.generate_job_profile(user_index)
             #            self.generate_rdd_profile(user_index)
 #        self.cluster.block_manager.rdd_list = self.rdd_list
@@ -132,7 +121,6 @@ class Simulator:
                     new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
 
             if isinstance(event, EventJobSubmit):
-                print "yes!------"
                 current_job_index[event.job.user_id] = event.job.index
                 ready_stages = self.scheduler.submit_job(event.job)
                 for stage in ready_stages:
@@ -140,8 +128,8 @@ class Simulator:
 
             elif isinstance(event, EventStageSubmit):
                 event.stage.submit_time = event.time
-                if event.stage.job.service_type == self.cluster.foreground_type:
-                    print "reserved for this stage:", self.cluster.jobIdToReservedNumber[event.stage.job_id]
+#                if event.stage.job.service_type == self.cluster.foreground_type:
+#                    print "reserved for this stage:", self.cluster.jobIdToReservedNumber[event.stage.job_id]
                 msg = self.scheduler.submit_stage(event.stage, event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
@@ -151,18 +139,17 @@ class Simulator:
                             ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventTaskSubmit):
-                print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
-                if self.cluster.straggler_mitigation_enabled:
-                    if event.task.is_initial:
-                        event.task.stage.not_submitted_tasks.remove(event.task)
-                else:
-                    event.task.stage.not_submitted_tasks.remove(event.task)
+                if self.cluster.isDebug:
+                    print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
+                event.task.stage.not_submitted_tasks.remove(event.task)
+                event.task.stage.not_completed_tasks.append(event.task)
                 if len(event.task.stage.not_submitted_tasks) == 0:
                     event.task.stage.last_task_submit_time = event.time
                 continue
 
             elif isinstance(event, EventTaskComplete):
-                print "time", event.time, "   finish task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
+                if self.cluster.isDebug:
+                    print "time", event.time, "   finish task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if event.task.has_completed:
                     continue
                 event.task.has_completed = True
@@ -204,20 +191,31 @@ class Simulator:
             elif isinstance(event, EventJobComplete):
                 event.job.completion_time = event.time
                 event.job.duration = event.time - event.job.submit_time
-                print "-", event.job.id, " (job) finishes, duration", event.job.duration, " job.alloc ", event.job.alloc
+                event.job.execution_time = event.time - event.job.start_execution_time
+                print "-", event.job.id, " (job) finishes, duration", event.job.duration, " job.alloc ", event.job.alloc, "PR:", float(event.job.monopolize_time) / event.job.execution_time
+                print
 #                print "     Current idle machine number: ", len(self.cluster.make_offers()), "open machine number:", self.cluster.open_machine_number
                 if event.job.service_type == self.cluster.foreground_type:
                     self.cluster.clear_reservation(event.job)
+                    event.job.progress_rate = float(event.job.monopolize_time) / event.job.execution_time
                 self.scheduler.handle_job_completion(event.job)
                 self.job_durations[int(event.job.id.split("_")[-1])] = event.job.duration
 
             for new_event in new_events:
                 self.event_queue.put(new_event)
 
-        f = open("PageRank/job_duration.json",'w')
+        progress_rates = []
+        for job in self.job_list[0]:
+            if job.service_type == self.cluster.foreground_type:
+                progress_rates.append(job.progress_rate)
+        print "total average progress rate:", sum(progress_rates)/len(progress_rates)
+
+
+
+        f = open("Workloads/job_duration.json",'w')
         json.dump(self.job_durations,f,indent=2)
         f.close()
-        f = open("PageRank/stage_duration.json",'w')
+        f = open("Workloads/stage_duration.json",'w')
         json.dump(self.stage_durations,f,indent=2)
         f.close()
         if drawEnabled:
@@ -264,15 +262,20 @@ class Simulator:
         job_priority = dict()
         job_service_type = dict()
         job_curveString = dict()
+        job_monopolize_time = dict()
+        job_weight = dict()
         print "enter generate_job_profile"
 
         stageIdToParallelism = dict()
         for c_job_id in self.job_profile:
             # temporary setting
+            self.cluster.accelerate_factor = float(self.job_profile[c_job_id]["Accelerate Factor"])
             job_submit_time[int(c_job_id)] = self.job_profile[c_job_id]["Submit Time"]
             job_priority[int(c_job_id)] = self.job_profile[c_job_id]["Priority"]
             job_service_type[int(c_job_id)] = self.job_profile[c_job_id]["Service Type"]
             job_curveString[int(c_job_id)] = self.job_profile[c_job_id]["curve"]
+            job_monopolize_time[int(c_job_id)] = self.job_profile[c_job_id]["Monopolize Time"]
+            job_weight[int(c_job_id)] = self.job_profile[c_job_id]["Weight"]
 
         for stage_id in self.stage_profile:
             timeout_type = 0
@@ -302,15 +305,16 @@ class Simulator:
                 if job_service_type[job_id] <> 0:
                     runtime *= 1
                 else:
-                    runtime *= 10
+                    runtime *= 1
                 if runtime > max_time:
                     max_time = runtime
                 Task_id = 'user_%s_task_%s' % (user_id, task_id)
+                time_out = 0
                 if timeout_type == 0:
-                    task = Task(Job_id, Stage_id, Task_id, i, runtime, 0, job_priority[job_id])
+                    task = Task(Job_id, Stage_id, Task_id, i, runtime, time_out, job_priority[job_id])
                 else:
 #                    task = Task(Job_id, Stage_id, Task_id, i, runtime, 3000, job_priority[job_id])
-                    task = Task(Job_id, Stage_id, Task_id, i, runtime, 0, job_priority[job_id])
+                    task = Task(Job_id, Stage_id, Task_id, i, runtime, time_out, job_priority[job_id])
                 task_id += 1
                 task.user_id = user_id
                 taskset.append(task)
@@ -334,10 +338,12 @@ class Simulator:
                 job.submit_time = job_submit_time[job_id]
                 job.priority = job_priority[job_id]
                 job.service_type = job_service_type[job_id]
+                job.weight = job_weight[job_id]
                 if job.service_type == self.cluster.foreground_type:
                     self.cluster.jobIdToReservedNumber[job.id] = 0
                     self.cluster.jobIdToReservedMachineId[job.id] = set()
                 job.set_curve(job_curveString[job_id])
+                job.monopolize_time = job_monopolize_time[job_id]
                 self.job_list[user_id].append(job)
                 stage.priority = job.priority
                 stage.job = job
@@ -370,12 +376,6 @@ class Simulator:
 
     def reset(self):
         for job in self.job_list:
-            job.not_completed_stage_ids = [stage.id for stage in job.stages]
-            job.submitted_stage_ids = list()
-            job.completed_stage_ids = list()
-            for stage in job.stages:
-                stage.not_submitted_tasks = stage.taskset
-                stage.not_completed_tasks = stage.taskset
-                stage.completed_tasks = list()
+            job.reset()
         self.cluster.reset()
 

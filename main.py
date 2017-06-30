@@ -13,13 +13,17 @@ from math import pow
 
 user_number = 1
 machine_number = 4000
-machine_number = 32
+machine_number = 200
 core_number = 1
 json_dir = "./"
 
 machines = [Machine(i, core_number) for i in range(0, machine_number)]
 cluster = Cluster(machines)
+
 simulator = Simulator(cluster, json_dir, user_number)
+cluster.alpha = 0.8
+cluster.accelerate_factor = 1.0
+simulator.scheduler.scheduler_type = "fair"
 
 simulator.run()
 print "finish"
