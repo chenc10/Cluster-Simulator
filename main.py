@@ -13,7 +13,7 @@ from math import pow
 
 user_number = 1
 machine_number = 4000
-machine_number = 200
+machine_number = 1600
 core_number = 1
 json_dir = "./"
 
@@ -22,7 +22,7 @@ cluster = Cluster(machines)
 
 simulator = Simulator(cluster, json_dir, user_number)
 cluster.alpha = 0.8
-simulator.scheduler.scheduler_type = "fairi"
+simulator.scheduler.scheduler_type = "fair"
 
 simulator.run()
 print "finish"

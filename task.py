@@ -18,6 +18,9 @@ class Task:
         self.has_completed = False
         self.is_initial = True
 
+        self.start_time = 0
+        self.finish_time = 0
+
 
       # self.required_blocks = required_blocks
 #        self.produced_blocks = produced_blocks

@@ -48,6 +48,7 @@ class Simulator:
         self.app_map = OrderedDict()  # map from user id to app id
         self.job_durations = {}
         self.stage_durations = {}
+        self.job_execution_profile = {} # record the execution information of jobs
         # generate the job list for each user. All users share the rdd_list and block list
         for user_index in range(0, user_number):
             # each user randomly chooses an application
@@ -118,7 +119,7 @@ class Simulator:
                     new_events.append(EventReAlloc(event.time + 1000))
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
-                    new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
+                    new_events.append(EventTaskComplete(event.time + item[0].runtime, item[0], item[1]))
 
             if isinstance(event, EventJobSubmit):
                 current_job_index[event.job.user_id] = event.job.index
@@ -133,12 +134,13 @@ class Simulator:
                 msg = self.scheduler.submit_stage(event.stage, event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
-                    new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
+                    new_events.append(EventTaskComplete(event.time + item[0].runtime, item[0], item[1]))
                     if drawEnabled:
-                        for t in range(event.time/100 + 1, (event.time + item[2])/100 + 1):
+                        for t in range(event.time/100 + 1, (event.time + item[0].runtime)/100 + 1):
                             ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventTaskSubmit):
+                event.task.start_time = event.time
                 if self.cluster.isDebug:
                     print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if len(event.task.stage.not_submitted_tasks) == 0:
@@ -147,6 +149,7 @@ class Simulator:
                 continue
 
             elif isinstance(event, EventTaskComplete):
+                event.task.finish_time = event.time
                 if self.cluster.isDebug:
                     print "time", event.time, "   finish task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if event.task.has_completed:
@@ -160,16 +163,15 @@ class Simulator:
                     new_events.append(EventStageComplete(event.time, event.task.stage))
 
                 if event.task.stage.job.service_type == self.cluster.foreground_type and len(event.task.stage.not_submitted_tasks) > 0 and self.cluster.open_machine_number == 0:
-                    msg = [[event.task.stage.not_submitted_tasks[0], event.task.machine_id, event.task.stage.not_submitted_tasks[0].runtime]]
+                    msg = [[event.task.stage.not_submitted_tasks[0], event.task.machine_id]]
                     runtime = self.cluster.assign_task(event.task.machine_id, event.task.stage.not_submitted_tasks[0], event.time)
-                    msg[0][2] = runtime
                 else:
                     msg = self.scheduler.do_allocate(event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
-                    new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
+                    new_events.append(EventTaskComplete(event.time + item[0].runtime, item[0], item[1]))
                     if drawEnabled:
-                        for t in range(event.time/100 + 1, (event.time + item[2])/100 + 1):
+                        for t in range(event.time/100 + 1, (event.time + runtime)/100 + 1):
                             ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventStageComplete):
@@ -204,6 +206,17 @@ class Simulator:
                     event.job.progress_rate = float(event.job.monopolize_time) / event.job.execution_time
                 self.scheduler.handle_job_completion(event.job)
                 self.job_durations[int(event.job.id.split("_")[-1])] = event.job.duration
+                job_id = int(event.job.id.split("_")[-1])
+                self.job_execution_profile[job_id] = {}
+                self.job_execution_profile[job_id]["duration"] = event.job.duration
+                self.job_execution_profile[job_id]["demand"] = len(event.job.curve)-1
+                self.job_execution_profile[job_id]["execution_time"] = event.job.execution_time
+                self.job_execution_profile[job_id]["runtimes"] = [[i.runtime, i.machine_id, i.start_time, i.finish_time] for i in event.job.stages[0].taskset]
+                if self.scheduler.scheduler_type == "paf":
+                    self.job_execution_profile[job_id]["fair_alloc"] = event.job.fairAlloc
+                    self.job_execution_profile[job_id]["target_alloc"] = event.job.targetAlloc
+                self.job_execution_profile[job_id]["alloc"] = event.job.alloc
+                self.job_execution_profile[job_id]["progress_rate"] = event.job.progress_rate
 
             for new_event in new_events:
                 self.event_queue.put(new_event)
@@ -214,14 +227,15 @@ class Simulator:
                 progress_rates.append(job.progress_rate)
         print "total average progress rate:", sum(progress_rates)/len(progress_rates)
 
-
-
-        f = open("Workloads/job_duration.json",'w')
-        json.dump(self.job_durations,f,indent=2)
+        f = open("Workloads/job_execution_profile.json",'w')
+        json.dump(self.job_execution_profile,f,indent=2, sort_keys=True)
         f.close()
-        f = open("Workloads/stage_duration.json",'w')
-        json.dump(self.stage_durations,f,indent=2)
-        f.close()
+#        f = open("Workloads/job_duration.json",'w')
+#        json.dump(self.job_durations,f,indent=2)
+#        f.close()
+#        f = open("Workloads/stage_duration.json",'w')
+#        json.dump(self.stage_durations,f,indent=2)
+#        f.close()
         if drawEnabled:
             currentTaskNumber = []
             totalNumber = []
@@ -370,6 +384,8 @@ class Simulator:
         # this part shall be changed, sort by the submission time of a job
         self.job_list[user_id] = sorted(self.job_list[user_id], key=lambda job: job.index) #sort job_list by job_index
         print "finish generate job profile"
+        print "0: tasknumber:", len(self.job_list[0][0].stages[0].taskset)
+
 
     def search_runtime(self, stage_id, task_index):
         return self.runtime_profile[str(stage_id)][str(task_index)]['runtime']

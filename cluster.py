@@ -40,13 +40,14 @@ class Cluster:
 #        return offer_list
 
     def clear_reservation(self, job):
+        return
         for machineid in self.jobIdToReservedMachineId[job.id]:
             self.open_machine_number += 1
 #            print "machineid:",machineid
             self.machines[machineid].is_reserved = -1
             self.machines[machineid].reserve_job = None
             self.jobIdToReservedNumber[job.id] -= 1
-            job.alloc -= 1
+#            job.alloc -= 1
 
     def set_reservation(self, machineid, task, job_id='-1'):
 #        print "set reservation", machineid, "task", task.id, task.stage_id,"-", task.is_initial,"offer size:", len(self.make_offers()),"open machine number", self.open_machine_number
@@ -63,7 +64,6 @@ class Cluster:
             self.machines[machineid].reserve_job = job_id
 
     def assign_task(self, machineId, task, time):
-        runtime = task.runtime
         task.stage.not_submitted_tasks.remove(task)
         task.machine_id = machineId
         if self.machines[machineId].is_reserved > -1:
@@ -81,9 +81,8 @@ class Cluster:
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
             print "nnnnnn:", len(self.jobIdToReservedNumber)
-            runtime = task.runtime / task.stage.job.accelerate_factor
+            task.runtime = task.runtime / task.stage.job.accelerate_factor
         self.check_if_vacant()
-        return runtime
 
     def search_job_by_id(self,job_id): # job_id contains user id
         for job in self.running_jobs:
