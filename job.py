@@ -21,11 +21,11 @@ class Job:
 
         self.alloc = 0.0
         self.weight = 1.0
-        self.targetAlloc = 0.0
-        self.fairAlloc = 0.0
-        self.minAlloc = 0.0
-        self.demand = 0.0
-        self.nDemand = 0.0
+        self.targetAlloc = 1.0
+        self.fairAlloc = 1.0
+        self.minAlloc = 1.0
+        self.demand = 1.0
+        self.nDemand = 1.0
         self.curve = list()
         self.lSlope = 0.0
         self.rSlope = 0.0

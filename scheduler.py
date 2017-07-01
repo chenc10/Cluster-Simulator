@@ -160,7 +160,7 @@ class Scheduler:
 
     def handle_job_completion(self, job):
         self.cluster.running_jobs.remove(job)
-        self.cluster.calculate_targetAlloc()
+#        self.cluster.calculate_targetAlloc()
         self.cluster.finished_jobs.append(job)
 
     def find_ready_stages(self):

@@ -134,30 +134,37 @@ class Cluster:
             machine.reset()
 
     def calculate_fairAlloc(self):
-#        print "enter calculate"
+        print "enter calculate_fair"
         # to be completed: calculate the targetAlloc of all jobs in the running_jobs list
         jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
         totalResources = float(self.machine_number)
         totalWeight = sum([j.weight for j in jobList])
         jobList.sort(key=lambda i: i.nDemand)
-        for i in range(0, len(jobList)):
+        print "totalResources", totalResources, "totalWeight", totalWeight
+        for i in range(len(jobList)):
             jobList[i].fairAlloc = 0.0
-        for i in range(0, len(jobList)):
-#            print "enter fair:", i, "jobList[i].nDemand:", jobList[i].nDemand, jobList[i].weight, totalResources
+        for i in range(len(jobList)):
+            print "enter fair:", i, "jobList[i].nDemand:", jobList[i].nDemand, "weight:", jobList[i].weight, "total:", totalResources
             if totalResources <= 0:
                 break
             if jobList[i].nDemand * totalWeight < totalResources:
-#                print "totalWeight:", totalWeight
                 totalResources -= jobList[i].nDemand * totalWeight
+                unitAlloc = jobList[i].nDemand
+                print "nDemand*totalWeight:", jobList[i].nDemand * totalWeight, "remaining resource:", totalResources
                 for j in range(i, len(jobList)):
-                    jobList[j].fairAlloc += jobList[i].nDemand * jobList[j].weight
-                    jobList[j].nDemand -= jobList[i].nDemand
+                    print "add:", j, "| "
+                    jobList[j].fairAlloc += unitAlloc * jobList[j].weight
+                    jobList[j].nDemand -= unitAlloc
             else:
+                print "not enough, each weight get:", totalResources / totalWeight
+                unitAlloc = totalResources / totalWeight
                 for j in range(i, len(jobList)):
-                    jobList[j].fairAlloc += totalResources / totalWeight * jobList[j].weight
-                    jobList[j].nDemand -= totalResources / totalWeight
+                    jobList[j].fairAlloc += unitAlloc * jobList[j].weight
+                    jobList[j].nDemand -= unitAlloc
                 totalResources = 0.0
-        for i in range(0, len(jobList)):
+            result = [[int(j.id.split("_")[-1]), j.fairAlloc] for j in jobList]
+            print "after this iteration: ", result
+        for i in range(len(jobList)):
             jobList[i].nDemand = jobList[i].demand/ jobList[i].weight
             jobList[i].targetAlloc = jobList[i].fairAlloc
 #            print "result: ", i, jobList[i].id, jobList[i].targetAlloc
@@ -165,6 +172,8 @@ class Cluster:
 
     def calculate_targetAlloc(self):
         jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
+        if len(jobList) != 99:
+            return
         self.calculate_fairAlloc()
         if len(jobList) == 0:
             return
