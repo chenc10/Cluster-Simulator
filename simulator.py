@@ -141,10 +141,9 @@ class Simulator:
             elif isinstance(event, EventTaskSubmit):
                 if self.cluster.isDebug:
                     print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
-                event.task.stage.not_submitted_tasks.remove(event.task)
-                event.task.stage.not_completed_tasks.append(event.task)
                 if len(event.task.stage.not_submitted_tasks) == 0:
                     event.task.stage.last_task_submit_time = event.time
+#                    self.cluster.clear_reservation(event.task.stage.job)
                 continue
 
             elif isinstance(event, EventTaskComplete):
@@ -160,7 +159,12 @@ class Simulator:
                 if len(event.task.stage.not_completed_tasks) == 0:
                     new_events.append(EventStageComplete(event.time, event.task.stage))
 
-                msg = self.scheduler.do_allocate(event.time)
+                if event.task.stage.job.service_type == self.cluster.foreground_type and len(event.task.stage.not_submitted_tasks) > 0 and self.cluster.open_machine_number == 0:
+                    msg = [[event.task.stage.not_submitted_tasks[0], event.task.machine_id, event.task.stage.not_submitted_tasks[0].runtime]]
+                    runtime = self.cluster.assign_task(event.task.machine_id, event.task.stage.not_submitted_tasks[0], event.time)
+                    msg[0][2] = runtime
+                else:
+                    msg = self.scheduler.do_allocate(event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
                     new_events.append(EventTaskComplete(event.time + item[2], item[0], item[1]))
@@ -264,18 +268,19 @@ class Simulator:
         job_curveString = dict()
         job_monopolize_time = dict()
         job_weight = dict()
+        job_accelerate_factor = dict()
         print "enter generate_job_profile"
 
         stageIdToParallelism = dict()
         for c_job_id in self.job_profile:
             # temporary setting
-            self.cluster.accelerate_factor = float(self.job_profile[c_job_id]["Accelerate Factor"])
             job_submit_time[int(c_job_id)] = self.job_profile[c_job_id]["Submit Time"]
             job_priority[int(c_job_id)] = self.job_profile[c_job_id]["Priority"]
             job_service_type[int(c_job_id)] = self.job_profile[c_job_id]["Service Type"]
             job_curveString[int(c_job_id)] = self.job_profile[c_job_id]["curve"]
             job_monopolize_time[int(c_job_id)] = self.job_profile[c_job_id]["Monopolize Time"]
             job_weight[int(c_job_id)] = self.job_profile[c_job_id]["Weight"]
+            job_accelerate_factor[int(c_job_id)] = self.job_profile[c_job_id]["Accelerate Factor"]
 
         for stage_id in self.stage_profile:
             timeout_type = 0
@@ -339,6 +344,7 @@ class Simulator:
                 job.priority = job_priority[job_id]
                 job.service_type = job_service_type[job_id]
                 job.weight = job_weight[job_id]
+                job.accelerate_factor = job_accelerate_factor[job_id]
                 if job.service_type == self.cluster.foreground_type:
                     self.cluster.jobIdToReservedNumber[job.id] = 0
                     self.cluster.jobIdToReservedMachineId[job.id] = set()

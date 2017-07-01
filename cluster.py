@@ -28,8 +28,6 @@ class Cluster:
         self.pre_reserve_job_id = ""
 
         self.alpha = 0.8
-        self.accelerate_factor = 1.0
-
         self.isDebug = False
 
     def make_offers(self):
@@ -46,6 +44,7 @@ class Cluster:
             self.open_machine_number += 1
 #            print "machineid:",machineid
             self.machines[machineid].is_reserved = -1
+            self.machines[machineid].reserve_job = None
             self.jobIdToReservedNumber[job.id] -= 1
             job.alloc -= 1
 
@@ -56,12 +55,17 @@ class Cluster:
             self.jobIdToReservedNumber[task.job_id] += 1
             self.jobIdToReservedMachineId[task.job_id].add(machineid)
             self.machines[machineid].is_reserved = task.job_id
+            self.machines[machineid].reserve_job = task.stage.job
         else:
             self.jobIdToReservedNumber[job_id] += 1
             self.jobIdToReservedMachineId[job_id].add(machineid)
             self.machines[machineid].is_reserved = job_id
+            self.machines[machineid].reserve_job = job_id
 
     def assign_task(self, machineId, task, time):
+        runtime = task.runtime
+        task.stage.not_submitted_tasks.remove(task)
+        task.machine_id = machineId
         if self.machines[machineId].is_reserved > -1:
             if task.job_id <> self.machines[machineId].is_reserved:
                 print "Error! error! task.jobid:", task.job_id, task.stage_id, "machine reserved for:", self.machines[machineId].is_reserved
@@ -76,6 +80,10 @@ class Cluster:
 #            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
+            print "nnnnnn:", len(self.jobIdToReservedNumber)
+            runtime = task.runtime / task.stage.job.accelerate_factor
+        self.check_if_vacant()
+        return runtime
 
     def search_job_by_id(self,job_id): # job_id contains user id
         for job in self.running_jobs:

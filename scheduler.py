@@ -14,8 +14,6 @@ class Scheduler:
     def __init__(self, cluster):
         self.cluster = cluster
         self.task_buffer = list()  #tasks waiting to be scheduled
-        self.task_buffer_foreground = list()
-        self.task_buffer_background = list()
         self.completed_stage_ids = list()
         self.ready_stages = list() # for record to avoid duplicate submission while checking the ready stages
 
@@ -32,21 +30,6 @@ class Scheduler:
         self.scheduler_type = "fair"
 #        self.taskIdToAllowedMachineId = dict()
 
-    def task_buffer_insert(self, taskset):
-        # currently do not distinguish service type and priority
-        if taskset[0].stage.job.service_type == self.cluster.foreground_type:
-            self.task_buffer_foreground += taskset
-        else:
-            self.task_buffer_background += taskset
-        self.task_buffer = self.task_buffer_foreground + self.task_buffer_background
-
-    def task_buffer_delete(self, task):
-        if task.stage.job.service_type == self.cluster.foreground_type:
-            self.task_buffer_foreground.remove(task)
-        else:
-            self.task_buffer_background.remove(task)
-        self.task_buffer.remove(task)
-
     def check_waiting(self):
         print "check_waiting:", len(self.task_buffer)
         if len(self.task_buffer) > 0:
@@ -56,9 +39,9 @@ class Scheduler:
 
     def sort_tasks(self):
         if self.scheduler_type == "fair":
-            self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.weight)
+            self.task_buffer.sort(key=lambda x: x.job.alloc / x.job.weight)
         else:
-            self.task_buffer.sort(key=lambda x: x.stage.job.alloc / x.stage.job.targetAlloc)
+            self.task_buffer.sort(key=lambda x: x.job.alloc / x.job.targetAlloc)
         return
 
     def do_allocate(self, time):
@@ -71,66 +54,49 @@ class Scheduler:
         msg=list()
         if len(self.cluster.make_offers()) == 0 or len(self.task_buffer) == 0:
             return msg
-        if self.cluster.open_machine_number == 0 and self.task_buffer[0].stage.job.service_type <> self.cluster.foreground_type:
-            return msg
-        for task in self.task_buffer:
-            print " make_offers():", len(self.cluster.make_offers()), "open number:", self.cluster.open_machine_number
-            if len(self.cluster.make_offers()) == 0:
-                for item in msg:
-                    self.task_buffer.remove(item[0])
-                return msg
-            if self.cluster.open_machine_number == 0 and not self.cluster.jobIdToReservedNumber.has_key(task.job_id):
-                for item in msg:
-                    self.task_buffer.remove(item[0])
-                return msg
-            success = False
-            sign = False
-            t = 0
-            for machineId in self.cluster.make_offers():
-                t += 1
-#                print "taskid", task.id, "job", task.job_id, "machineid", machineId, "is_reserved", self.cluster.machines[machineId].is_reserved
-                if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
-                    continue
+#        if self.cluster.open_machine_number == 0 and self.task_buffer[0].job.service_type <> self.cluster.foreground_type:
+#            return msg
+        for stage in self.task_buffer:
+            for task in stage.not_submitted_tasks:
+                print " make_offers():", len(self.cluster.make_offers()), "open number:", self.cluster.open_machine_number, "task-jobid:", task.job_id, len(self.cluster.jobIdToReservedNumber)
+                if len(self.cluster.make_offers()) == 0:
+                    return msg
+#                if self.cluster.open_machine_number == 0 and self.cluster.jobIdToReservedNumber[task.job_id] == 0:
+                if self.cluster.open_machine_number == 0:
+                    return msg
+                success = False
+                sign = False
+                for machineId in self.cluster.make_offers():
+    #                print "taskid", task.id, "job", task.job_id, "machineid", machineId, "is_reserved", self.cluster.machines[machineId].is_reserved
+                    if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
+                        continue
+                    sign = True
+                    if machineId in self.stageIdToAllowedMachineId[task.stage.id]:
+                        success = True
+                        runtime = self.cluster.assign_task(machineId, task, time)
+                        msg.append((task, machineId, runtime))
+                        break
+                if success == False and sign == True:
+                    # if locality requirement is not achieved.
+                    # first check whether time out
+                    if task.first_attempt_time > 0:
+                        if time - task.first_attempt_time > task.timeout:
+                            for machineId in self.cluster.make_offers():
+                                if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
+                                    continue
+                                if task.timeout == 100:
+                                    task.runtime = task.runtime * 1
+    #                                task.runtime = task.runtime * 1.2
+                                else:
+                                    task.runtime = task.runtime * 1
+    #                                task.runtime = task.runtime * 5
+                                runtime = self.cluster.assign_task(machineId, task, time)
+                                msg.append((task, machineId, runtime))
+                                break
+                    else:
+                        task.first_attempt_time = time
                 if self.cluster.isDebug:
-                    print "enter inner 1", task.id, machineId
-                sign = True
-                if machineId in self.stageIdToAllowedMachineId[task.stage.id]:
-                    task.machine_id = machineId
-                    self.cluster.assign_task(machineId, task, time)
-#                    self.cluster.task_map[task.id] = machineId
-                    self.cluster.check_if_vacant()
-                    success = True
-                    msg.append((task, machineId, task.runtime))
-                    break
-            if self.cluster.isDebug:
-                print "leave inner 1", task.id, machineId, self.cluster.open_machine_number
-                print [[i.is_reserved, i.is_vacant] for i in self.cluster.machines]
-            if success == False and sign == True:
-                # if locality requirement is not achieved.
-                # first check whether time out
-                if task.first_attempt_time > 0:
-                    if time - task.first_attempt_time > task.timeout:
-                        for machineId in self.cluster.make_offers():
-                            if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
-                                continue
-                            task.machine_id = machineId
-                            if task.timeout == 100:
-                                task.runtime = task.runtime * 1
-#                                task.runtime = task.runtime * 1.2
-                            else:
-                                task.runtime = task.runtime * 1
-#                                task.runtime = task.runtime * 5
-                            self.cluster.assign_task(machineId, task, time)
-#                            self.cluster.task_map[task.id] = machineId
-                            self.cluster.check_if_vacant()
-                            msg.append((task, machineId, task.runtime))
-                            break
-                else:
-                    task.first_attempt_time = time
-            if self.cluster.isDebug:
-                print time, task.id, task.stage_id, task.is_initial, "success:", success, "sign:",sign
-        for item in msg:
-            self.task_buffer.remove(item[0])
+                    print time, task.id, task.stage_id, task.is_initial, "success:", success, "sign:",sign
         return msg
 
     def submit_job(self, job):  # upon submission of a job, find the stages that are ready to be submitted
@@ -146,11 +112,7 @@ class Scheduler:
 
     def submit_stage(self, stage, time):  # upon submission of a stage, all the tasks in the stage are ready to be submitted. Submit as many tasks as possible
         this_job = stage.job
-        if stage.priority == 0:
-            tmp = stage.taskset + self.task_buffer
-            self.task_buffer = tmp
-        else:
-            self.task_buffer += stage.taskset
+        self.task_buffer.append(stage)
         # add by cc
         if len(stage.parent_ids) == 0:
             self.stageIdToAllowedMachineId[stage.id] = range(self.cluster.machine_number)
@@ -167,6 +129,7 @@ class Scheduler:
         return msg
 
     def stage_complete(self, stage): ##upon completion of a stage, check whether any other stage is ready to be submitted. If not, check whether the job is completed
+        self.task_buffer.remove(stage)
         msg = list() # ready_stage or job (tell the simulator the entire job is done)
         stage.job.not_completed_stage_ids.remove(stage.id)
         stage.job.completed_stage_ids.append(stage.id)

@@ -22,8 +22,7 @@ cluster = Cluster(machines)
 
 simulator = Simulator(cluster, json_dir, user_number)
 cluster.alpha = 0.8
-cluster.accelerate_factor = 1.0
-simulator.scheduler.scheduler_type = "fair"
+simulator.scheduler.scheduler_type = "fairi"
 
 simulator.run()
 print "finish"

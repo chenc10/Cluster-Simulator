@@ -17,6 +17,7 @@ class Job:
         self.monopolize_time = 1.0
         self.start_execution_time = 0.0
         self.execution_time = 0.0
+        self.accelerate_factor = 1.0
 
         self.alloc = 0.0
         self.weight = 1.0
