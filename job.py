@@ -59,7 +59,7 @@ class Job:
         self.fairAlloc = 0.0
 
     def update_slope(self):
-#        print self.id, len(self.lSlopeArray), self.targetAlloc, self.minAlloc
+        print self.id, len(self.lSlopeArray), self.targetAlloc, self.minAlloc
         self.lSlope = self.lSlopeArray[int(self.targetAlloc)]
         self.rSlope = self.rSlopeArray[int(self.targetAlloc)]
 #        print " ", self.lSlope, self.rSlope

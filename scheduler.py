@@ -53,13 +53,11 @@ class Scheduler:
         # function2: record the locality of each stage (which slots the stage initially occupies.)
         msg=list()
         if len(self.cluster.make_offers()) == 0 or len(self.task_buffer) == 0:
-            print 1
             return msg
 #        if self.cluster.open_machine_number == 0 and self.task_buffer[0].job.service_type <> self.cluster.foreground_type:
 #            return msg
         for stage in self.task_buffer:
-            if self.cluster.isDebug:
-                print "do_allocate: stage.id:", stage.id, "remaining task number:", len(stage.not_submitted_tasks)
+#            print "do_allocate: stage.id:", stage.id, "remaining task number:", len(stage.not_submitted_tasks)
             tmpList = [i for i in stage.not_submitted_tasks]
             for task in tmpList:
                 if self.cluster.isDebug:

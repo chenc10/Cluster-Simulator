@@ -211,10 +211,13 @@ class Simulator:
                 self.job_execution_profile[job_id]["duration"] = event.job.duration
                 self.job_execution_profile[job_id]["demand"] = len(event.job.curve)-1
                 self.job_execution_profile[job_id]["execution_time"] = event.job.execution_time
-                self.job_execution_profile[job_id]["runtimes"] = [[i.runtime, i.machine_id, i.start_time, i.finish_time] for i in event.job.stages[0].taskset]
+#                self.job_execution_profile[job_id]["runtimes"] = [[i.runtime, i.machine_id, i.start_time, i.finish_time] for i in event.job.stages[0].taskset]
                 if self.scheduler.scheduler_type == "paf":
                     self.job_execution_profile[job_id]["fair_alloc"] = event.job.fairAlloc
                     self.job_execution_profile[job_id]["target_alloc"] = event.job.targetAlloc
+                else:
+                    self.job_execution_profile[job_id]["fair_alloc"] = event.job.alloc
+                    self.job_execution_profile[job_id]["target_alloc"] = event.job.alloc
                 self.job_execution_profile[job_id]["alloc"] = event.job.alloc
                 self.job_execution_profile[job_id]["progress_rate"] = event.job.progress_rate
 
@@ -227,7 +230,11 @@ class Simulator:
                 progress_rates.append(job.progress_rate)
         print "total average progress rate:", sum(progress_rates)/len(progress_rates)
 
-        f = open("Workloads/job_execution_profile.json",'w')
+        if self.scheduler.scheduler_type == "paf":
+            fname = "ExecutionResult/" + str(self.cluster.machine_number) + "_" + self.scheduler.scheduler_type + "_" + str(self.cluster.alpha) +".json"
+        else:
+            fname = "ExecutionResult/" + str(self.cluster.machine_number) + "_" + self.scheduler.scheduler_type +".json"
+        f = open(fname,'w')
         json.dump(self.job_execution_profile,f,indent=2, sort_keys=True)
         f.close()
 #        f = open("Workloads/job_duration.json",'w')

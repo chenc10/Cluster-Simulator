@@ -29,6 +29,7 @@ class Cluster:
 
         self.alpha = 0.8
         self.isDebug = False
+        self.totalJobNumber = 0
 
     def make_offers(self):
         # return the available resources to the framework scheduler
@@ -80,7 +81,6 @@ class Cluster:
 #            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
         else:
             self.jobIdToReservedNumber[task.job_id] -= 1
-            print "nnnnnn:", len(self.jobIdToReservedNumber)
             task.runtime = task.runtime / task.stage.job.accelerate_factor
         self.check_if_vacant()
 
@@ -140,39 +140,33 @@ class Cluster:
         totalResources = float(self.machine_number)
         totalWeight = sum([j.weight for j in jobList])
         jobList.sort(key=lambda i: i.nDemand)
-        print "totalResources", totalResources, "totalWeight", totalWeight
         for i in range(len(jobList)):
             jobList[i].fairAlloc = 0.0
         for i in range(len(jobList)):
-            print "enter fair:", i, "jobList[i].nDemand:", jobList[i].nDemand, "weight:", jobList[i].weight, "total:", totalResources
             if totalResources <= 0:
                 break
             if jobList[i].nDemand * totalWeight < totalResources:
                 totalResources -= jobList[i].nDemand * totalWeight
                 unitAlloc = jobList[i].nDemand
-                print "nDemand*totalWeight:", jobList[i].nDemand * totalWeight, "remaining resource:", totalResources
                 for j in range(i, len(jobList)):
-                    print "add:", j, "| "
                     jobList[j].fairAlloc += unitAlloc * jobList[j].weight
                     jobList[j].nDemand -= unitAlloc
             else:
-                print "not enough, each weight get:", totalResources / totalWeight
                 unitAlloc = totalResources / totalWeight
                 for j in range(i, len(jobList)):
                     jobList[j].fairAlloc += unitAlloc * jobList[j].weight
                     jobList[j].nDemand -= unitAlloc
                 totalResources = 0.0
-            result = [[int(j.id.split("_")[-1]), j.fairAlloc] for j in jobList]
-            print "after this iteration: ", result
+#            result = [[int(j.id.split("_")[-1]), j.fairAlloc] for j in jobList]
         for i in range(len(jobList)):
             jobList[i].nDemand = jobList[i].demand/ jobList[i].weight
             jobList[i].targetAlloc = jobList[i].fairAlloc
-#            print "result: ", i, jobList[i].id, jobList[i].targetAlloc
+            print "result: ", i, jobList[i].id, jobList[i].targetAlloc
             jobList[i].update_slope()
 
     def calculate_targetAlloc(self):
         jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
-        if len(jobList) != 99:
+        if len(jobList) != self.totalJobNumber - 1:
             return
         self.calculate_fairAlloc()
         if len(jobList) == 0:
