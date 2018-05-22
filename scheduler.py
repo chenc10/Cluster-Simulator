@@ -1,15 +1,6 @@
 ##Simulator submits jobs and stages to the scheduler
 ##Scheduler submits tasks to the cluster
 
-
-from event import (EventJobSubmit, EventReAlloc, EventJobComplete, EventStageSubmit, EventStageComplete, EventTaskSubmit, EventTaskComplete, Event)
-from job import Job
-from stage import Stage
-from task import Task
-import os
-import numpy as np
-
-
 class Scheduler:
     def __init__(self, cluster):
         self.cluster = cluster
@@ -39,49 +30,44 @@ class Scheduler:
 
     def sort_tasks(self):
         if self.scheduler_type == "fair":
+            # - fair scheduler: preferentially serve the job starved most
             self.task_buffer.sort(key=lambda x: x.job.alloc / x.job.weight)
         else:
+            # - other scheduler: first define a target allocation, and then conduct progressive filling
             self.task_buffer.sort(key=lambda x: x.job.alloc / x.job.targetAlloc)
         return
 
     def do_allocate(self, time):
-#        print "enter do_allocate, task_buffer size: ", len(self.task_buffer)
-        self.sort_tasks()
-        # chen: this part needs to be modified finely. Move the scheduling part from cluster.py to this function
-        # achieve data locality with a heartbeat function; achieve locality with stage.locality_preference.
-        # function1: sort the tasks according to the priority
-        # function2: record the locality of each stage (which slots the stage initially occupies.)
-        msg=list()
+        self.sort_tasks() # - this function is very important! It determines the scheduling algorithms!
+        msg=list() # - msg returns the allocation scheme
         if len(self.cluster.make_offers()) == 0 or len(self.task_buffer) == 0:
+            # - if there is no idle slot or no pending tasks, skip allocation immediately
             return msg
         for stage in self.task_buffer:
+            # - allocate all the idle slots to pending tasks
             tmpList = [i for i in stage.not_submitted_tasks]
             for task in tmpList:
                 if len(self.cluster.make_offers()) == 0:
+                    # - if there is no idle slot
                     return msg
                 success = False
                 sign = False
                 for machineId in self.cluster.make_offers():
                     sign = True
                     if machineId in self.stageIdToAllowedMachineId[task.stage.id]:
+                        # - if locality requirement is satisfied
                         success = True
                         self.cluster.assign_task(machineId, task, time)
                         msg.append((task, machineId))
                         break
                 if success == False and sign == True:
-                    # if locality requirement is not achieved.
-                    # first check whether time out
+                    # - if locality requirement is not satisfied.
                     if task.first_attempt_time > 0:
+                        # - first check whether the locality wait has been time out
                         if time - task.first_attempt_time > task.timeout:
                             for machineId in self.cluster.make_offers():
-                                if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
-                                    continue
-                                if task.timeout == 100:
-                                    task.runtime = task.runtime * 1
-    #                                task.runtime = task.runtime * 1.2
-                                else:
-                                    task.runtime = task.runtime * 1
-    #                                task.runtime = task.runtime * 5
+                                # - task runtime is prolonged due to poor data locality
+                                task.runtime *= 1.5
                                 self.cluster.assign_task(machineId, task, time)
                                 msg.append((task, machineId))
                                 break
@@ -92,7 +78,7 @@ class Scheduler:
     def submit_job(self, job):  # upon submission of a job, find the stages that are ready to be submitted
         self.cluster.running_jobs.append(job)
         self.cluster.calculate_targetAlloc()
-        # DAG not allowed
+        # - current I assume each job has only one stage
         ready_stages = job.stages[0]
         self.ready_stages.append(job.stages[0])
 
@@ -137,23 +123,16 @@ class Scheduler:
             tmpMachineList.append(task.machine_id)
         tmpMachineList = list(set(tmpMachineList))
         self.stageIdToUsedMachineId[stage.id] = tmpMachineList
-        if stage.job.service_type == 0:
-            machinelist = [task.machine_id for task in stage.taskset]
-            machinelist = list(set(machinelist))
-            print "stage complete:", stage.id, "stage tasknum:", len(stage.taskset), "used machine number:", len(machinelist)
+        machinelist = [task.machine_id for task in stage.taskset]
+        machinelist = list(set(machinelist))
+        print "stage complete:", stage.id, "stage tasknum:", len(stage.taskset), "used machine number:", len(machinelist)
         return msg
 
     def handle_job_completion(self, job):
         self.cluster.running_jobs.remove(job)
-#        self.cluster.calculate_targetAlloc()
         self.cluster.finished_jobs.append(job)
 
     def find_ready_stages(self):
-        #completed_stages = np.copy(self.completed_stage_ids) # completed in previous jobs
-        #submitted_stage = list() # submitted by current jobs
-        #for running_job in self.cluster.running_jobs:
-        #    completed_stages += running_job.completed_stage_ids  # make sure they are lists
-        #    submitted_stage  += running_job.submitted_stage_ids
         ready_stages = list()
         for running_job in self.cluster.running_jobs:
             for stage in running_job.stages:

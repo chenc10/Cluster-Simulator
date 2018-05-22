@@ -13,7 +13,6 @@ class Job:
         self.completion_time = 0
         self.duration = 0
         self.priority = 0
-        self.service_type = 2
         self.monopolize_time = 1.0
         self.start_execution_time = 0.0
         self.execution_time = 0.0
