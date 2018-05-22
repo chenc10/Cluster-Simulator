@@ -60,13 +60,9 @@ class Scheduler:
 #            print "do_allocate: stage.id:", stage.id, "remaining task number:", len(stage.not_submitted_tasks)
             tmpList = [i for i in stage.not_submitted_tasks]
             for task in tmpList:
-                if self.cluster.isDebug:
-                    print time, " make_offers():", len(self.cluster.make_offers()), "open number:", self.cluster.open_machine_number, "task-jobid:", task.job_id, len(self.cluster.jobIdToReservedNumber)
                 if len(self.cluster.make_offers()) == 0:
                     return msg
 #                if self.cluster.open_machine_number == 0 and self.cluster.jobIdToReservedNumber[task.job_id] == 0:
-                if self.cluster.open_machine_number == 0:
-                    return msg
                 success = False
                 sign = False
                 for machineId in self.cluster.make_offers():

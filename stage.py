@@ -12,8 +12,6 @@ class Stage:
         self.not_completed_tasks = [task for task in self.taskset]
         self.not_submitted_tasks = [task for task in self.taskset]
 
-        self.downstream_parallelism = 0
-        self.has_started_pre_reserve = False
         self.priority = 0
         self.submit_time = 0
         self.last_task_submit_time = 0

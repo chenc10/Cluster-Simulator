@@ -16,7 +16,6 @@ class Cluster:
 #        self.task_map = dict() # map: (task_id, machine_number)
         self.Memory_Disk_Ratio = 3  # ratio of the speed in reading from memory and disk
         self.vacant_machine_list = set(range(self.machine_number))
-        self.open_machine_number = len(machines)
         self.jobIdToReservedNumber = {}
         self.jobIdToReservedMachineId = {}
         self.foreground_type = 0
@@ -34,47 +33,17 @@ class Cluster:
     def make_offers(self):
         # return the available resources to the framework scheduler
         return self.vacant_machine_list
-#        offer_list = []
-#        for machine in self.machines:
-#            if machine.is_vacant:
-#                offer_list.append(machine)
-#        return offer_list
-
-    def clear_reservation(self, job):
-        return
-        for machineid in self.jobIdToReservedMachineId[job.id]:
-            self.open_machine_number += 1
-#            print "machineid:",machineid
-            self.machines[machineid].is_reserved = -1
-            self.machines[machineid].reserve_job = None
-            self.jobIdToReservedNumber[job.id] -= 1
-#            job.alloc -= 1
-
-    def set_reservation(self, machineid, task, job_id='-1'):
-#        print "set reservation", machineid, "task", task.id, task.stage_id,"-", task.is_initial,"offer size:", len(self.make_offers()),"open machine number", self.open_machine_number
-#        print " - jobIdto", self.jobIdToReservedNumber[task.job_id]
-        if job_id == '-1':
-            self.jobIdToReservedNumber[task.job_id] += 1
-            self.jobIdToReservedMachineId[task.job_id].add(machineid)
-            self.machines[machineid].is_reserved = task.job_id
-            self.machines[machineid].reserve_job = task.stage.job
-        else:
-            self.jobIdToReservedNumber[job_id] += 1
-            self.jobIdToReservedMachineId[job_id].add(machineid)
-            self.machines[machineid].is_reserved = job_id
-            self.machines[machineid].reserve_job = job_id
 
     def assign_task(self, machineId, task, time):
         task.stage.not_submitted_tasks.remove(task)
         task.machine_id = machineId
-        if self.machines[machineId].is_reserved > -1:
-            if task.job_id <> self.machines[machineId].is_reserved:
-                print "Error! error! task.jobid:", task.job_id, task.stage_id, "machine reserved for:", self.machines[machineId].is_reserved
+#        if self.machines[machineId].is_reserved > -1:
+#            if task.job_id <> self.machines[machineId].is_reserved:
+#                print "Error! error! task.jobid:", task.job_id, task.stage_id, "machine reserved for:", self.machines[machineId].is_reserved
         self.machines[machineId].assign_task(task)
         if self.machines[machineId].is_vacant == False:
             self.vacant_machine_list.remove(machineId)
         if self.machines[machineId].is_reserved == -1:
-            self.open_machine_number -= 1
             task.stage.job.alloc += 1
             if task.stage.job.alloc == 1:
                 task.stage.job.start_execution_time = time
@@ -113,18 +82,6 @@ class Cluster:
         running_machine.is_vacant = True
         self.vacant_machine_list.add(running_machine_id)
         self.is_vacant = True
-        if task.stage.job.service_type == self.foreground_type:
-            self.set_reservation(running_machine_id, task)
-        else:
-            if self.pre_reserve_enabled == True and self.currently_reserving == True:
-                print "pre_reserve: ", task.id, running_machine_id, self.pre_reserve_job_id
-                self.set_reservation(running_machine_id, task, self.pre_reserve_job_id)
-                self.currently_pre_reserved_number += 1
-                if self.currently_pre_reserved_number == self.pre_reserve_goal:
-                    self.currently_reserving = False
-                    self.currently_pre_reserved_number = 0
-            else:
-                self.open_machine_number += 1
 
     def reset(self):
         self.running_job = -1  # jobs will be executed one by one

@@ -20,9 +20,9 @@ machines = [Machine(i, core_number) for i in range(0, machine_number)]
 cluster = Cluster(machines)
 
 simulator = Simulator(cluster, json_dir, user_number)
-cluster.alpha = 0.7
+cluster.alpha = 0.90
 cluster.totalJobNumber = 200
-simulator.scheduler.scheduler_type = "paf"
+simulator.scheduler.scheduler_type = "fair"
 
 simulator.run()
 print "finish"

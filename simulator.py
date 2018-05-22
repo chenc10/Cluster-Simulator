@@ -61,14 +61,6 @@ class Simulator:
             self.stage_profile = json.load(open(stage_profile_path, 'r'), object_pairs_hook=OrderedDict)
             print "stage_profile loaded"
 
-#            rdd_profile_path = '%s/%s/rdd_profile.json' % (json_dir, application_name )
-#            if not os.path.exists(rdd_profile_path):
-#                print('Error: can not find %s/rdd.json' % application_name)
-#                exit(-1)
-#            else:
-#                self.rdd_profile = json.load(open(rdd_profile_path, 'r'), object_pairs_hook=OrderedDict)
-
-#            runtime_path = '%s/%s/runtime.json' % (json_dir, application_name)  #runtime of each task when the input data is read from Memory
             runtime_path = "Workloads/runtime.json"
             self.runtime_profile = json.load(open(runtime_path, 'r'), object_pairs_hook=OrderedDict)
             print "runtime_profile loaded"
@@ -78,36 +70,22 @@ class Simulator:
             self.job_profile = json.load(open(job_path, 'r'), object_pairs_hook=OrderedDict)
             print "job_profile loaded"
             self.generate_job_profile(user_index)
-            #            self.generate_rdd_profile(user_index)
-#        self.cluster.block_manager.rdd_list = self.rdd_list
 
     def run(self):
 
-        # self.init_ref_count()
-#        self.cluster.block_manager.rdd_list = self.rdd_list  # to tell the block_manager how many partitions each rdd has
-        print "hah"
         runtime = 0
         self.log.add('Simulation Starts with %s machines.'%(len(self.cluster.machines)),0)
-        #completed_stage_ids=list()
         current_job_index = dict()  # map from user id to its current running job index
         # This code segment shall be modified. Initially all the jobs shall be submitted.
         for user_index in range(0, self.user_number):
             current_job_index[user_index] = 0
             for job_i in range(len(self.job_list[user_index])):
-                if self.job_list[user_index][job_i].index > 8000 and self.job_list[user_index][job_i].index < 8000:
-                    continue
-                if self.job_list[user_index][job_i].index % 100000 > 10001:
-                    continue
+#                if self.job_list[user_index][job_i].index > 8000 and self.job_list[user_index][job_i].index < 8000:
+#                    continue
+#                if self.job_list[user_index][job_i].index % 100000 > 10001:
+#                    continue
                 self.event_queue.put(EventJobSubmit(self.job_list[user_index][job_i].submit_time, self.job_list[user_index][job_i]))
         self.event_queue.put(EventReAlloc(0))
-
-        # add by cc
-        drawEnabled = False
-        if drawEnabled:
-            ExecutorState = []
-            NoE = 30
-            for i in range(NoE):
-                ExecutorState.append([-1]*10000)
 
         while not self.event_queue.empty():
             event = self.event_queue.get()
@@ -129,15 +107,10 @@ class Simulator:
 
             elif isinstance(event, EventStageSubmit):
                 event.stage.submit_time = event.time
-#                if event.stage.job.service_type == self.cluster.foreground_type:
-#                    print "reserved for this stage:", self.cluster.jobIdToReservedNumber[event.stage.job_id]
                 msg = self.scheduler.submit_stage(event.stage, event.time)
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
                     new_events.append(EventTaskComplete(event.time + item[0].runtime, item[0], item[1]))
-                    if drawEnabled:
-                        for t in range(event.time/100 + 1, (event.time + item[0].runtime)/100 + 1):
-                            ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventTaskSubmit):
                 event.task.start_time = event.time
@@ -145,7 +118,6 @@ class Simulator:
                     print "time", event.time, " submit task ", event.task.id, "-job-", event.task.job_id, "-slot-", event.task.machine_id
                 if len(event.task.stage.not_submitted_tasks) == 0:
                     event.task.stage.last_task_submit_time = event.time
-#                    self.cluster.clear_reservation(event.task.stage.job)
                 continue
 
             elif isinstance(event, EventTaskComplete):
@@ -162,7 +134,7 @@ class Simulator:
                 if len(event.task.stage.not_completed_tasks) == 0:
                     new_events.append(EventStageComplete(event.time, event.task.stage))
 
-                if event.task.stage.job.service_type == self.cluster.foreground_type and len(event.task.stage.not_submitted_tasks) > 0 and self.cluster.open_machine_number == 0:
+                if event.task.stage.job.service_type == self.cluster.foreground_type and len(event.task.stage.not_submitted_tasks) > 0:
                     msg = [[event.task.stage.not_submitted_tasks[0], event.task.machine_id]]
                     runtime = self.cluster.assign_task(event.task.machine_id, event.task.stage.not_submitted_tasks[0], event.time)
                 else:
@@ -170,9 +142,6 @@ class Simulator:
                 for item in msg:
                     new_events.append(EventTaskSubmit(event.time, item[0]))
                     new_events.append(EventTaskComplete(event.time + item[0].runtime, item[0], item[1]))
-                    if drawEnabled:
-                        for t in range(event.time/100 + 1, (event.time + runtime)/100 + 1):
-                            ExecutorState[item[1]][t] = int(item[0].job_id.split("_")[-1])
 
             elif isinstance(event, EventStageComplete):
                 if event.stage.job.service_type == self.cluster.foreground_type:
@@ -192,7 +161,6 @@ class Simulator:
                         new_events.append(EventStageSubmit(event.time, item))
                     else: # must be job, which means the job is done
                         new_events.append(EventJobComplete(event.time, item))
-                #print "#####  time:", event.time, "stage completion", event.stage.id, event.stage.job_id
 
             elif isinstance(event, EventJobComplete):
                 event.job.completion_time = event.time
@@ -200,9 +168,7 @@ class Simulator:
                 event.job.execution_time = event.time - event.job.start_execution_time
                 print "-", event.job.id, " (job) finishes, duration", event.job.duration, " job.alloc ", event.job.alloc, "PR:", float(event.job.monopolize_time) / event.job.execution_time
                 print
-#                print "     Current idle machine number: ", len(self.cluster.make_offers()), "open machine number:", self.cluster.open_machine_number
                 if event.job.service_type == self.cluster.foreground_type:
-                    self.cluster.clear_reservation(event.job)
                     event.job.progress_rate = float(event.job.monopolize_time) / event.job.execution_time
                 self.scheduler.handle_job_completion(event.job)
                 self.job_durations[int(event.job.id.split("_")[-1])] = event.job.duration
@@ -243,41 +209,7 @@ class Simulator:
 #        f = open("Workloads/stage_duration.json",'w')
 #        json.dump(self.stage_durations,f,indent=2)
 #        f.close()
-        if drawEnabled:
-            currentTaskNumber = []
-            totalNumber = []
-            TimeLine = []
-            time = 0.0
-            for i in range(len(ExecutorState[0])):
-                tmp = 0
-                tmp1 = 0
-                for j in range(NoE):
-                    if ExecutorState[j][i] == 10000:
-                        tmp = tmp + 1
-                    if ExecutorState[j][i] > -1:
-                        tmp1 = tmp1 + 1
-                currentTaskNumber.append(tmp)
-                totalNumber.append(tmp1)
-                time = time + 0.1
-                TimeLine.append(time)
-            font = {'family': 'Times New Roman',
-                    'size': 26}
-            N = len(ExecutorState[0])
-            fig, ax = plt.subplots()
-            fig.set_size_inches(9, 5)
-            ax.plot(TimeLine, currentTaskNumber)
-            ax.set_xlim([0, 200])
-            ax.set_xlabel('Timeline (s)', **font)
-            xlist = [0, 50, 100, 150, 200]
-            ax.set_xticks(xlist)
-            ax.set_xticklabels([str(i) for i in xlist], **font)
-            ax.set_ylim([0, 50])
-            ax.set_ylabel('# of Active Tasks', **font)
-            ylist = [0, 20, 40, 60, 80, 100]
-            ax.set_yticks(ylist)
-            ax.set_yticklabels([str(i) for i in ylist], **font)
-            plt.gcf().subplots_adjust(bottom=0.2)
-            fig.savefig("foo.pdf")
+
         return [runtime]
 
     def generate_job_profile(self, user_id):
