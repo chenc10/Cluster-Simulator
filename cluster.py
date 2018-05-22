@@ -13,18 +13,7 @@ class Cluster:
         self.running_jobs = list()
         self.finished_jobs = list()
         self.is_vacant = True
-#        self.task_map = dict() # map: (task_id, machine_number)
-        self.Memory_Disk_Ratio = 3  # ratio of the speed in reading from memory and disk
         self.vacant_machine_list = set(range(self.machine_number))
-        self.jobIdToReservedNumber = {}
-        self.jobIdToReservedMachineId = {}
-        self.foreground_type = 0
-        self.straggler_mitigation_enabled = False
-        self.pre_reserve_enabled = False
-        self.currently_reserving = False
-        self.currently_pre_reserved_number = 0
-        self.pre_reserve_goal = 0
-        self.pre_reserve_job_id = ""
 
         self.alpha = 0.8
         self.isDebug = False
@@ -37,20 +26,12 @@ class Cluster:
     def assign_task(self, machineId, task, time):
         task.stage.not_submitted_tasks.remove(task)
         task.machine_id = machineId
-#        if self.machines[machineId].is_reserved > -1:
-#            if task.job_id <> self.machines[machineId].is_reserved:
-#                print "Error! error! task.jobid:", task.job_id, task.stage_id, "machine reserved for:", self.machines[machineId].is_reserved
         self.machines[machineId].assign_task(task)
-        if self.machines[machineId].is_vacant == False:
-            self.vacant_machine_list.remove(machineId)
-        if self.machines[machineId].is_reserved == -1:
-            task.stage.job.alloc += 1
-            if task.stage.job.alloc == 1:
-                task.stage.job.start_execution_time = time
-#            print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
-        else:
-            self.jobIdToReservedNumber[task.job_id] -= 1
-            task.runtime = task.runtime / task.stage.job.accelerate_factor
+        self.vacant_machine_list.remove(machineId)
+        task.stage.job.alloc += 1
+        if task.stage.job.alloc == 1:
+            task.stage.job.start_execution_time = time
+#        print "job ", task.stage.job.id, "alloc increase to", task.stage.job.alloc
         self.check_if_vacant()
 
     def search_job_by_id(self,job_id): # job_id contains user id
@@ -66,11 +47,6 @@ class Cluster:
 
     def check_if_vacant(self):
         return True
-        self.is_vacant = False
-        for machine in self.machines:
-            if machine.is_vacant == True:
-                self.is_vacant = True
-                return
 
     def release_task(self, task):
         running_machine_id = task.machine_id
@@ -93,7 +69,7 @@ class Cluster:
     def calculate_fairAlloc(self):
         print "enter calculate_fair"
         # to be completed: calculate the targetAlloc of all jobs in the running_jobs list
-        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
+        jobList = [job for job in self.running_jobs]
         totalResources = float(self.machine_number)
         totalWeight = sum([j.weight for j in jobList])
         jobList.sort(key=lambda i: i.nDemand)
@@ -122,7 +98,7 @@ class Cluster:
             jobList[i].update_slope()
 
     def calculate_targetAlloc(self):
-        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
+        jobList = [job for job in self.running_jobs]
         if len(jobList) != self.totalJobNumber - 1:
             return
         self.calculate_fairAlloc()
@@ -215,7 +191,7 @@ class Cluster:
                 tmpGiverJob.update_slope()
                 tmpGainJob.update_slope()
 
-        jobList = [job for job in self.running_jobs if job.service_type == self.foreground_type]
+        jobList = [job for job in self.running_jobs]
         print "get targetAlloc: ",
         for j in jobList:
             print "id-" + str(j.id) + "-alloc-" + str(j.targetAlloc),

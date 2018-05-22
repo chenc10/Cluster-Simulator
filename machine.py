@@ -8,8 +8,6 @@ class Machine:
         self.core_number = core_number
         self.cores = [Core() for i in range(1, core_number+1)]
         self.is_vacant = True
-        self.is_reserved = -1
-        self.reserve_job = None
         #self.cache_policy = policy
 
     def assign_task(self,task):

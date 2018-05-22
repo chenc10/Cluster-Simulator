@@ -14,21 +14,6 @@ class Task:
         self.first_attempt_time = 0
         self.timeout = timeout
         self.stage = None
-        self.peer = None
-        self.has_completed = False
-        self.is_initial = True
 
         self.start_time = 0
         self.finish_time = 0
-
-
-      # self.required_blocks = required_blocks
-#        self.produced_blocks = produced_blocks
-        #self.required_blocks = list()
-        #self.required_shuffle_rdds = list()
-
-    def handle_task_submission(self, machineid, time):
-        self.stage.not_submitted_tasks.remove(self)
-        self.stage.not_completed_tasks.append(self)
-        if len(self.stage.not_submitted_tasks) == 0:
-            self.stage.last_task_submit_time = time

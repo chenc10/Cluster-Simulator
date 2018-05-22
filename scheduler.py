@@ -54,21 +54,14 @@ class Scheduler:
         msg=list()
         if len(self.cluster.make_offers()) == 0 or len(self.task_buffer) == 0:
             return msg
-#        if self.cluster.open_machine_number == 0 and self.task_buffer[0].job.service_type <> self.cluster.foreground_type:
-#            return msg
         for stage in self.task_buffer:
-#            print "do_allocate: stage.id:", stage.id, "remaining task number:", len(stage.not_submitted_tasks)
             tmpList = [i for i in stage.not_submitted_tasks]
             for task in tmpList:
                 if len(self.cluster.make_offers()) == 0:
                     return msg
-#                if self.cluster.open_machine_number == 0 and self.cluster.jobIdToReservedNumber[task.job_id] == 0:
                 success = False
                 sign = False
                 for machineId in self.cluster.make_offers():
-    #                print "taskid", task.id, "job", task.job_id, "machineid", machineId, "is_reserved", self.cluster.machines[machineId].is_reserved
-                    if self.cluster.machines[machineId].is_reserved > -1 and task.job_id <> self.cluster.machines[machineId].is_reserved:
-                        continue
                     sign = True
                     if machineId in self.stageIdToAllowedMachineId[task.stage.id]:
                         success = True
@@ -94,8 +87,6 @@ class Scheduler:
                                 break
                     else:
                         task.first_attempt_time = time
-                if self.cluster.isDebug:
-                    print time, task.id, task.stage_id, "success:", success, "sign:",sign, "len:", len(stage.not_submitted_tasks)
         return msg
 
     def submit_job(self, job):  # upon submission of a job, find the stages that are ready to be submitted
