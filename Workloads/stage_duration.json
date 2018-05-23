@@ -1,0 +1,596 @@
+{
+  "user_0_stage_4": {
+    "used slot num": 4, 
+    "duration": 609554.8, 
+    "monopolize": 630280, 
+    "task num": 48
+  }, 
+  "user_0_stage_5": {
+    "used slot num": 6, 
+    "duration": 3231891.0, 
+    "monopolize": 34218, 
+    "task num": 56
+  }, 
+  "user_0_stage_6": {
+    "used slot num": 3, 
+    "duration": 717708.7999999999, 
+    "monopolize": 891358, 
+    "task num": 64
+  }, 
+  "user_0_stage_7": {
+    "used slot num": 12, 
+    "duration": 3900128.0, 
+    "monopolize": 265832, 
+    "task num": 72
+  }, 
+  "user_0_stage_1": {
+    "used slot num": 7, 
+    "duration": 1265074, 
+    "monopolize": 466122, 
+    "task num": 24
+  }, 
+  "user_0_stage_2": {
+    "used slot num": 24, 
+    "duration": 839986, 
+    "monopolize": 839986, 
+    "task num": 32
+  }, 
+  "user_0_stage_3": {
+    "used slot num": 20, 
+    "duration": 791885.0, 
+    "monopolize": 456575, 
+    "task num": 40
+  }, 
+  "user_0_stage_8": {
+    "used slot num": 4, 
+    "duration": 1589316, 
+    "monopolize": 911620, 
+    "task num": 80
+  }, 
+  "user_0_stage_9": {
+    "used slot num": 12, 
+    "duration": 3286717.0, 
+    "monopolize": 271268, 
+    "task num": 88
+  }, 
+  "user_0_stage_52": {
+    "used slot num": 5, 
+    "duration": 3369448.5999999996, 
+    "monopolize": 9624887, 
+    "task num": 48
+  }, 
+  "user_0_stage_53": {
+    "used slot num": 12, 
+    "duration": 2460409.0, 
+    "monopolize": 349407, 
+    "task num": 56
+  }, 
+  "user_0_stage_50": {
+    "used slot num": 3, 
+    "duration": 292585.0, 
+    "monopolize": 300591, 
+    "task num": 32
+  }, 
+  "user_0_stage_51": {
+    "used slot num": 11, 
+    "duration": 3093735.0, 
+    "monopolize": 669748, 
+    "task num": 40
+  }, 
+  "user_0_stage_56": {
+    "used slot num": 2, 
+    "duration": 750325.8, 
+    "monopolize": 1170897, 
+    "task num": 80
+  }, 
+  "user_0_stage_57": {
+    "used slot num": 6, 
+    "duration": 2614472.0, 
+    "monopolize": 101871, 
+    "task num": 88
+  }, 
+  "user_0_stage_54": {
+    "used slot num": 2, 
+    "duration": 796148.5999999999, 
+    "monopolize": 1872358, 
+    "task num": 64
+  }, 
+  "user_0_stage_55": {
+    "used slot num": 21, 
+    "duration": 3918718.0, 
+    "monopolize": 672206, 
+    "task num": 72
+  }, 
+  "user_0_stage_58": {
+    "used slot num": 10, 
+    "duration": 1838383.0, 
+    "monopolize": 2858270, 
+    "task num": 96
+  }, 
+  "user_0_stage_59": {
+    "used slot num": 5, 
+    "duration": 3152485.0, 
+    "monopolize": 134277, 
+    "task num": 104
+  }, 
+  "user_0_stage_27": {
+    "used slot num": 10, 
+    "duration": 2917073.0, 
+    "monopolize": 30196, 
+    "task num": 104
+  }, 
+  "user_0_stage_26": {
+    "used slot num": 4, 
+    "duration": 233413.79999999996, 
+    "monopolize": 197873, 
+    "task num": 96
+  }, 
+  "user_0_stage_25": {
+    "used slot num": 37, 
+    "duration": 11249967.0, 
+    "monopolize": 3961273, 
+    "task num": 88
+  }, 
+  "user_0_stage_24": {
+    "used slot num": 4, 
+    "duration": 2649208.2, 
+    "monopolize": 10102370, 
+    "task num": 80
+  }, 
+  "user_0_stage_23": {
+    "used slot num": 10, 
+    "duration": 3470455.0, 
+    "monopolize": 230490, 
+    "task num": 72
+  }, 
+  "user_0_stage_22": {
+    "used slot num": 6, 
+    "duration": 366623.0, 
+    "monopolize": 445637, 
+    "task num": 64
+  }, 
+  "user_0_stage_21": {
+    "used slot num": 31, 
+    "duration": 8741489.0, 
+    "monopolize": 2863928, 
+    "task num": 56
+  }, 
+  "user_0_stage_20": {
+    "used slot num": 3, 
+    "duration": 276116.60000000003, 
+    "monopolize": 204093, 
+    "task num": 48
+  }, 
+  "user_0_stage_29": {
+    "used slot num": 7, 
+    "duration": 3579490.0, 
+    "monopolize": 112438, 
+    "task num": 120
+  }, 
+  "user_0_stage_28": {
+    "used slot num": 2, 
+    "duration": 453055.20000000007, 
+    "monopolize": 689096, 
+    "task num": 112
+  }, 
+  "user_0_stage_89": {
+    "used slot num": 10, 
+    "duration": 2896908.0, 
+    "monopolize": 299505, 
+    "task num": 88
+  }, 
+  "user_0_stage_88": {
+    "used slot num": 4, 
+    "duration": 833322.8, 
+    "monopolize": 496244, 
+    "task num": 80
+  }, 
+  "user_0_stage_81": {
+    "used slot num": 10, 
+    "duration": 1351547.0, 
+    "monopolize": 305643, 
+    "task num": 24
+  }, 
+  "user_0_stage_80": {
+    "used slot num": 2, 
+    "duration": 945985.8000000002, 
+    "monopolize": 1180876, 
+    "task num": 16
+  }, 
+  "user_0_stage_83": {
+    "used slot num": 8, 
+    "duration": 1874649.0, 
+    "monopolize": 341350, 
+    "task num": 40
+  }, 
+  "user_0_stage_82": {
+    "used slot num": 3, 
+    "duration": 839972.6, 
+    "monopolize": 707162, 
+    "task num": 32
+  }, 
+  "user_0_stage_85": {
+    "used slot num": 33, 
+    "duration": 11521515.0, 
+    "monopolize": 5063942, 
+    "task num": 56
+  }, 
+  "user_0_stage_84": {
+    "used slot num": 7, 
+    "duration": 432651, 
+    "monopolize": 186932, 
+    "task num": 48
+  }, 
+  "user_0_stage_87": {
+    "used slot num": 5, 
+    "duration": 1983426.0, 
+    "monopolize": 120343, 
+    "task num": 72
+  }, 
+  "user_0_stage_86": {
+    "used slot num": 4, 
+    "duration": 1905840.8, 
+    "monopolize": 4138500, 
+    "task num": 64
+  }, 
+  "user_0_stage_34": {
+    "used slot num": 3, 
+    "duration": 310504.19999999995, 
+    "monopolize": 222446, 
+    "task num": 32
+  }, 
+  "user_0_stage_35": {
+    "used slot num": 4, 
+    "duration": 1252617.0, 
+    "monopolize": 74253, 
+    "task num": 40
+  }, 
+  "user_0_stage_36": {
+    "used slot num": 3, 
+    "duration": 1123617, 
+    "monopolize": 909059, 
+    "task num": 48
+  }, 
+  "user_0_stage_37": {
+    "used slot num": 8, 
+    "duration": 2104626.0, 
+    "monopolize": 130183, 
+    "task num": 56
+  }, 
+  "user_0_stage_30": {
+    "used slot num": 3, 
+    "duration": 296539.0, 
+    "monopolize": 290989, 
+    "task num": 128
+  }, 
+  "user_0_stage_31": {
+    "used slot num": 20, 
+    "duration": 7698747.0, 
+    "monopolize": 850808, 
+    "task num": 136
+  }, 
+  "user_0_stage_32": {
+    "used slot num": 5, 
+    "duration": 1431658.0, 
+    "monopolize": 1080748, 
+    "task num": 16
+  }, 
+  "user_0_stage_33": {
+    "used slot num": 4, 
+    "duration": 1060965.0, 
+    "monopolize": 103021, 
+    "task num": 24
+  }, 
+  "user_0_stage_38": {
+    "used slot num": 11, 
+    "duration": 1589408, 
+    "monopolize": 1492790, 
+    "task num": 64
+  }, 
+  "user_0_stage_39": {
+    "used slot num": 20, 
+    "duration": 5867782.0, 
+    "monopolize": 1950033, 
+    "task num": 72
+  }, 
+  "user_0_stage_96": {
+    "used slot num": 5, 
+    "duration": 1891147, 
+    "monopolize": 1817954, 
+    "task num": 16
+  }, 
+  "user_0_stage_97": {
+    "used slot num": 1, 
+    "duration": 673775.0, 
+    "monopolize": 36990, 
+    "task num": 24
+  }, 
+  "user_0_stage_94": {
+    "used slot num": 2, 
+    "duration": 382985.39999999997, 
+    "monopolize": 81921, 
+    "task num": 128
+  }, 
+  "user_0_stage_95": {
+    "used slot num": 12, 
+    "duration": 5068096.0, 
+    "monopolize": 412350, 
+    "task num": 136
+  }, 
+  "user_0_stage_92": {
+    "used slot num": 2, 
+    "duration": 359771.2, 
+    "monopolize": 100694, 
+    "task num": 112
+  }, 
+  "user_0_stage_93": {
+    "used slot num": 65, 
+    "duration": 15698432.0, 
+    "monopolize": 4927909, 
+    "task num": 120
+  }, 
+  "user_0_stage_90": {
+    "used slot num": 6, 
+    "duration": 2713973.4000000004, 
+    "monopolize": 6481467, 
+    "task num": 96
+  }, 
+  "user_0_stage_91": {
+    "used slot num": 9, 
+    "duration": 1341964.0, 
+    "monopolize": 40829, 
+    "task num": 104
+  }, 
+  "user_0_stage_98": {
+    "used slot num": 8, 
+    "duration": 1177895.0, 
+    "monopolize": 1250940, 
+    "task num": 32
+  }, 
+  "user_0_stage_99": {
+    "used slot num": 3, 
+    "duration": 1492984.0, 
+    "monopolize": 94084, 
+    "task num": 40
+  }, 
+  "user_0_stage_18": {
+    "used slot num": 3, 
+    "duration": 605007.8, 
+    "monopolize": 597227, 
+    "task num": 32
+  }, 
+  "user_0_stage_19": {
+    "used slot num": 23, 
+    "duration": 6126220.0, 
+    "monopolize": 2371718, 
+    "task num": 40
+  }, 
+  "user_0_stage_16": {
+    "used slot num": 2, 
+    "duration": 159445.6, 
+    "monopolize": 87906, 
+    "task num": 16
+  }, 
+  "user_0_stage_17": {
+    "used slot num": 11, 
+    "duration": 1644365.0, 
+    "monopolize": 330166, 
+    "task num": 24
+  }, 
+  "user_0_stage_14": {
+    "used slot num": 4, 
+    "duration": 7163723.199999999, 
+    "monopolize": 27360635, 
+    "task num": 128
+  }, 
+  "user_0_stage_15": {
+    "used slot num": 11, 
+    "duration": 7865847.0, 
+    "monopolize": 784052, 
+    "task num": 136
+  }, 
+  "user_0_stage_12": {
+    "used slot num": 7, 
+    "duration": 1783370.0, 
+    "monopolize": 2218763, 
+    "task num": 112
+  }, 
+  "user_0_stage_13": {
+    "used slot num": 1, 
+    "duration": 3005553.0, 
+    "monopolize": 55156, 
+    "task num": 120
+  }, 
+  "user_0_stage_10": {
+    "used slot num": 3, 
+    "duration": 525980.0, 
+    "monopolize": 331110, 
+    "task num": 96
+  }, 
+  "user_0_stage_11": {
+    "used slot num": 11, 
+    "duration": 5429962.0, 
+    "monopolize": 286973, 
+    "task num": 104
+  }, 
+  "user_0_stage_69": {
+    "used slot num": 1, 
+    "duration": 1256199.0, 
+    "monopolize": 36443, 
+    "task num": 56
+  }, 
+  "user_0_stage_68": {
+    "used slot num": 5, 
+    "duration": 499438.6, 
+    "monopolize": 629180, 
+    "task num": 48
+  }, 
+  "user_0_stage_63": {
+    "used slot num": 6, 
+    "duration": 4628326.0, 
+    "monopolize": 211820, 
+    "task num": 136
+  }, 
+  "user_0_stage_62": {
+    "used slot num": 6, 
+    "duration": 864580.2000000002, 
+    "monopolize": 1720860, 
+    "task num": 128
+  }, 
+  "user_0_stage_61": {
+    "used slot num": 9, 
+    "duration": 2874815.0, 
+    "monopolize": 134746, 
+    "task num": 120
+  }, 
+  "user_0_stage_60": {
+    "used slot num": 8, 
+    "duration": 1895860.2, 
+    "monopolize": 1915546, 
+    "task num": 112
+  }, 
+  "user_0_stage_67": {
+    "used slot num": 9, 
+    "duration": 2408380.0, 
+    "monopolize": 189998, 
+    "task num": 40
+  }, 
+  "user_0_stage_66": {
+    "used slot num": 5, 
+    "duration": 1060596.8, 
+    "monopolize": 1879766, 
+    "task num": 32
+  }, 
+  "user_0_stage_65": {
+    "used slot num": 7, 
+    "duration": 1076670.2000000002, 
+    "monopolize": 223098, 
+    "task num": 24
+  }, 
+  "user_0_stage_64": {
+    "used slot num": 2, 
+    "duration": 126650.59999999998, 
+    "monopolize": 77212, 
+    "task num": 16
+  }, 
+  "user_0_stage_78": {
+    "used slot num": 5, 
+    "duration": 357321.20000000007, 
+    "monopolize": 269478, 
+    "task num": 128
+  }, 
+  "user_0_stage_79": {
+    "used slot num": 4, 
+    "duration": 2580114.0, 
+    "monopolize": 62877, 
+    "task num": 136
+  }, 
+  "user_0_stage_70": {
+    "used slot num": 5, 
+    "duration": 1052207.4000000001, 
+    "monopolize": 1681764, 
+    "task num": 64
+  }, 
+  "user_0_stage_71": {
+    "used slot num": 11, 
+    "duration": 1433958.3999999997, 
+    "monopolize": 89180, 
+    "task num": 72
+  }, 
+  "user_0_stage_72": {
+    "used slot num": 2, 
+    "duration": 663839.2000000001, 
+    "monopolize": 902612, 
+    "task num": 80
+  }, 
+  "user_0_stage_73": {
+    "used slot num": 11, 
+    "duration": 2806942.0, 
+    "monopolize": 228426, 
+    "task num": 88
+  }, 
+  "user_0_stage_74": {
+    "used slot num": 4, 
+    "duration": 153858.0, 
+    "monopolize": 66031, 
+    "task num": 96
+  }, 
+  "user_0_stage_75": {
+    "used slot num": 6, 
+    "duration": 4797129.0, 
+    "monopolize": 305383, 
+    "task num": 104
+  }, 
+  "user_0_stage_76": {
+    "used slot num": 7, 
+    "duration": 671101.7999999999, 
+    "monopolize": 332809, 
+    "task num": 112
+  }, 
+  "user_0_stage_77": {
+    "used slot num": 9, 
+    "duration": 2755295.0, 
+    "monopolize": 237278, 
+    "task num": 120
+  }, 
+  "user_0_stage_45": {
+    "used slot num": 60, 
+    "duration": 14158498.0, 
+    "monopolize": 4829027, 
+    "task num": 120
+  }, 
+  "user_0_stage_44": {
+    "used slot num": 15, 
+    "duration": 2834155.8, 
+    "monopolize": 8470606, 
+    "task num": 112
+  }, 
+  "user_0_stage_47": {
+    "used slot num": 75, 
+    "duration": 15205492.0, 
+    "monopolize": 4678090, 
+    "task num": 136
+  }, 
+  "user_0_stage_46": {
+    "used slot num": 9, 
+    "duration": 1538284.6, 
+    "monopolize": 1726502, 
+    "task num": 128
+  }, 
+  "user_0_stage_41": {
+    "used slot num": 12, 
+    "duration": 5182461.0, 
+    "monopolize": 366365, 
+    "task num": 88
+  }, 
+  "user_0_stage_40": {
+    "used slot num": 13, 
+    "duration": 1088144.5999999999, 
+    "monopolize": 1195482, 
+    "task num": 80
+  }, 
+  "user_0_stage_43": {
+    "used slot num": 6, 
+    "duration": 3277498, 
+    "monopolize": 155704, 
+    "task num": 104
+  }, 
+  "user_0_stage_42": {
+    "used slot num": 4, 
+    "duration": 966547, 
+    "monopolize": 935218, 
+    "task num": 96
+  }, 
+  "user_0_stage_49": {
+    "used slot num": 8, 
+    "duration": 1501819.4000000001, 
+    "monopolize": 144668, 
+    "task num": 24
+  }, 
+  "user_0_stage_48": {
+    "used slot num": 6, 
+    "duration": 611669.0, 
+    "monopolize": 297341, 
+    "task num": 16
+  }
+}

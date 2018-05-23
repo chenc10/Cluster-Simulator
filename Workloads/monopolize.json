@@ -1,0 +1,602 @@
+{
+  "0": {
+    "Monopolize Time": 1799
+  }, 
+  "1": {
+    "Monopolize Time": 521283
+  }, 
+  "2": {
+    "Monopolize Time": 255304
+  }, 
+  "3": {
+    "Monopolize Time": 436356
+  }, 
+  "4": {
+    "Monopolize Time": 346855
+  }, 
+  "5": {
+    "Monopolize Time": 36839
+  }, 
+  "6": {
+    "Monopolize Time": 201073
+  }, 
+  "7": {
+    "Monopolize Time": 205672
+  }, 
+  "8": {
+    "Monopolize Time": 1264698
+  }, 
+  "9": {
+    "Monopolize Time": 126205
+  }, 
+  "10": {
+    "Monopolize Time": 136496
+  }, 
+  "11": {
+    "Monopolize Time": 734052
+  }, 
+  "12": {
+    "Monopolize Time": 524894
+  }, 
+  "13": {
+    "Monopolize Time": 34298
+  }, 
+  "14": {
+    "Monopolize Time": 5700434
+  }, 
+  "15": {
+    "Monopolize Time": 778873
+  }, 
+  "16": {
+    "Monopolize Time": 68964
+  }, 
+  "17": {
+    "Monopolize Time": 368861
+  }, 
+  "18": {
+    "Monopolize Time": 5059073
+  }, 
+  "19": {
+    "Monopolize Time": 1746453
+  }, 
+  "20": {
+    "Monopolize Time": 53021
+  }, 
+  "21": {
+    "Monopolize Time": 2355209
+  }, 
+  "22": {
+    "Monopolize Time": 112318
+  }, 
+  "23": {
+    "Monopolize Time": 148711
+  }, 
+  "24": {
+    "Monopolize Time": 127300
+  }, 
+  "25": {
+    "Monopolize Time": 2878206
+  }, 
+  "26": {
+    "Monopolize Time": 279533
+  }, 
+  "27": {
+    "Monopolize Time": 26714
+  }, 
+  "28": {
+    "Monopolize Time": 34919
+  }, 
+  "29": {
+    "Monopolize Time": 81426
+  }, 
+  "30": {
+    "Monopolize Time": 40106
+  }, 
+  "31": {
+    "Monopolize Time": 19595938
+  }, 
+  "32": {
+    "Monopolize Time": 2685468
+  }, 
+  "33": {
+    "Monopolize Time": 1212495
+  }, 
+  "34": {
+    "Monopolize Time": 8498180
+  }, 
+  "35": {
+    "Monopolize Time": 209721
+  }, 
+  "36": {
+    "Monopolize Time": 175953
+  }, 
+  "37": {
+    "Monopolize Time": 96839
+  }, 
+  "38": {
+    "Monopolize Time": 2378559
+  }, 
+  "39": {
+    "Monopolize Time": 1111048
+  }, 
+  "40": {
+    "Monopolize Time": 112592
+  }, 
+  "41": {
+    "Monopolize Time": 831567
+  }, 
+  "42": {
+    "Monopolize Time": 74918
+  }, 
+  "43": {
+    "Monopolize Time": 55482
+  }, 
+  "44": {
+    "Monopolize Time": 442008
+  }, 
+  "45": {
+    "Monopolize Time": 15858177
+  }, 
+  "46": {
+    "Monopolize Time": 357485
+  }, 
+  "47": {
+    "Monopolize Time": 3085785
+  }, 
+  "48": {
+    "Monopolize Time": 209593
+  }, 
+  "49": {
+    "Monopolize Time": 194530
+  }, 
+  "50": {
+    "Monopolize Time": 124350
+  }, 
+  "51": {
+    "Monopolize Time": 582141
+  }, 
+  "52": {
+    "Monopolize Time": 1100780
+  }, 
+  "53": {
+    "Monopolize Time": 3055228
+  }, 
+  "54": {
+    "Monopolize Time": 154960
+  }, 
+  "55": {
+    "Monopolize Time": 446650
+  }, 
+  "56": {
+    "Monopolize Time": 83065
+  }, 
+  "57": {
+    "Monopolize Time": 479324
+  }, 
+  "58": {
+    "Monopolize Time": 640944
+  }, 
+  "59": {
+    "Monopolize Time": 111958
+  }, 
+  "60": {
+    "Monopolize Time": 712953
+  }, 
+  "61": {
+    "Monopolize Time": 121479
+  }, 
+  "62": {
+    "Monopolize Time": 2393246
+  }, 
+  "63": {
+    "Monopolize Time": 149137
+  }, 
+  "64": {
+    "Monopolize Time": 82860
+  }, 
+  "65": {
+    "Monopolize Time": 144144
+  }, 
+  "66": {
+    "Monopolize Time": 1744574
+  }, 
+  "67": {
+    "Monopolize Time": 246867
+  }, 
+  "68": {
+    "Monopolize Time": 191989
+  }, 
+  "69": {
+    "Monopolize Time": 28499
+  }, 
+  "70": {
+    "Monopolize Time": 799614
+  }, 
+  "71": {
+    "Monopolize Time": 108162
+  }, 
+  "72": {
+    "Monopolize Time": 98793
+  }, 
+  "73": {
+    "Monopolize Time": 167313
+  }, 
+  "74": {
+    "Monopolize Time": 22032
+  }, 
+  "75": {
+    "Monopolize Time": 5176452
+  }, 
+  "76": {
+    "Monopolize Time": 935836
+  }, 
+  "77": {
+    "Monopolize Time": 154033
+  }, 
+  "78": {
+    "Monopolize Time": 35983
+  }, 
+  "79": {
+    "Monopolize Time": 164015
+  }, 
+  "80": {
+    "Monopolize Time": 586648
+  }, 
+  "81": {
+    "Monopolize Time": 242432
+  }, 
+  "82": {
+    "Monopolize Time": 327825
+  }, 
+  "83": {
+    "Monopolize Time": 186641
+  }, 
+  "84": {
+    "Monopolize Time": 76433
+  }, 
+  "85": {
+    "Monopolize Time": 4203455
+  }, 
+  "86": {
+    "Monopolize Time": 749182
+  }, 
+  "87": {
+    "Monopolize Time": 78547
+  }, 
+  "88": {
+    "Monopolize Time": 263307
+  }, 
+  "89": {
+    "Monopolize Time": 216580
+  }, 
+  "90": {
+    "Monopolize Time": 427710
+  }, 
+  "91": {
+    "Monopolize Time": 30318
+  }, 
+  "92": {
+    "Monopolize Time": 44372
+  }, 
+  "93": {
+    "Monopolize Time": 4502241
+  }, 
+  "94": {
+    "Monopolize Time": 36841
+  }, 
+  "95": {
+    "Monopolize Time": 365424
+  }, 
+  "96": {
+    "Monopolize Time": 508938
+  }, 
+  "97": {
+    "Monopolize Time": 37634
+  }, 
+  "98": {
+    "Monopolize Time": 339993
+  }, 
+  "99": {
+    "Monopolize Time": 203498
+  }, 
+  "100": {
+    "Monopolize Time": 29353
+  }, 
+  "101": {
+    "Monopolize Time": 2924100
+  }, 
+  "102": {
+    "Monopolize Time": 337931
+  }, 
+  "103": {
+    "Monopolize Time": 24492
+  }, 
+  "104": {
+    "Monopolize Time": 139500
+  }, 
+  "105": {
+    "Monopolize Time": 105799
+  }, 
+  "106": {
+    "Monopolize Time": 152215
+  }, 
+  "107": {
+    "Monopolize Time": 50850
+  }, 
+  "108": {
+    "Monopolize Time": 833397
+  }, 
+  "109": {
+    "Monopolize Time": 133103
+  }, 
+  "110": {
+    "Monopolize Time": 247522
+  }, 
+  "111": {
+    "Monopolize Time": 523225
+  }, 
+  "112": {
+    "Monopolize Time": 25839
+  }, 
+  "113": {
+    "Monopolize Time": 86069
+  }, 
+  "114": {
+    "Monopolize Time": 31842
+  }, 
+  "115": {
+    "Monopolize Time": 2374874
+  }, 
+  "116": {
+    "Monopolize Time": 2386030
+  }, 
+  "117": {
+    "Monopolize Time": 541865
+  }, 
+  "118": {
+    "Monopolize Time": 615272
+  }, 
+  "119": {
+    "Monopolize Time": 230043
+  }, 
+  "120": {
+    "Monopolize Time": 30438
+  }, 
+  "121": {
+    "Monopolize Time": 475041
+  }, 
+  "122": {
+    "Monopolize Time": 100923
+  }, 
+  "123": {
+    "Monopolize Time": 362095
+  }, 
+  "124": {
+    "Monopolize Time": 20777
+  }, 
+  "125": {
+    "Monopolize Time": 271303
+  }, 
+  "126": {
+    "Monopolize Time": 23707165
+  }, 
+  "127": {
+    "Monopolize Time": 263192
+  }, 
+  "128": {
+    "Monopolize Time": 672937
+  }, 
+  "129": {
+    "Monopolize Time": 37829
+  }, 
+  "130": {
+    "Monopolize Time": 83825
+  }, 
+  "131": {
+    "Monopolize Time": 47104
+  }, 
+  "132": {
+    "Monopolize Time": 290217
+  }, 
+  "133": {
+    "Monopolize Time": 160244
+  }, 
+  "134": {
+    "Monopolize Time": 1731577
+  }, 
+  "135": {
+    "Monopolize Time": 2874518
+  }, 
+  "136": {
+    "Monopolize Time": 62122595
+  }, 
+  "137": {
+    "Monopolize Time": 988061
+  }, 
+  "138": {
+    "Monopolize Time": 3493128
+  }, 
+  "139": {
+    "Monopolize Time": 520211
+  }, 
+  "140": {
+    "Monopolize Time": 58996
+  }, 
+  "141": {
+    "Monopolize Time": 671522
+  }, 
+  "142": {
+    "Monopolize Time": 30583
+  }, 
+  "143": {
+    "Monopolize Time": 1051495
+  }, 
+  "144": {
+    "Monopolize Time": 383487
+  }, 
+  "145": {
+    "Monopolize Time": 173803
+  }, 
+  "146": {
+    "Monopolize Time": 203350
+  }, 
+  "147": {
+    "Monopolize Time": 110902
+  }, 
+  "148": {
+    "Monopolize Time": 118492
+  }, 
+  "149": {
+    "Monopolize Time": 3846766
+  }, 
+  "150": {
+    "Monopolize Time": 32119
+  }, 
+  "151": {
+    "Monopolize Time": 40841
+  }, 
+  "152": {
+    "Monopolize Time": 434422
+  }, 
+  "153": {
+    "Monopolize Time": 501441
+  }, 
+  "154": {
+    "Monopolize Time": 164182
+  }, 
+  "155": {
+    "Monopolize Time": 446242
+  }, 
+  "156": {
+    "Monopolize Time": 180513
+  }, 
+  "157": {
+    "Monopolize Time": 1557791
+  }, 
+  "158": {
+    "Monopolize Time": 43567
+  }, 
+  "159": {
+    "Monopolize Time": 186472
+  }, 
+  "160": {
+    "Monopolize Time": 299180
+  }, 
+  "161": {
+    "Monopolize Time": 261636
+  }, 
+  "162": {
+    "Monopolize Time": 171811
+  }, 
+  "163": {
+    "Monopolize Time": 30866
+  }, 
+  "164": {
+    "Monopolize Time": 502828
+  }, 
+  "165": {
+    "Monopolize Time": 270241
+  }, 
+  "166": {
+    "Monopolize Time": 310826
+  }, 
+  "167": {
+    "Monopolize Time": 523404
+  }, 
+  "168": {
+    "Monopolize Time": 257094
+  }, 
+  "169": {
+    "Monopolize Time": 370450
+  }, 
+  "170": {
+    "Monopolize Time": 190360
+  }, 
+  "171": {
+    "Monopolize Time": 47297
+  }, 
+  "172": {
+    "Monopolize Time": 405572
+  }, 
+  "173": {
+    "Monopolize Time": 1393109
+  }, 
+  "174": {
+    "Monopolize Time": 98535
+  }, 
+  "175": {
+    "Monopolize Time": 326170
+  }, 
+  "176": {
+    "Monopolize Time": 359334
+  }, 
+  "177": {
+    "Monopolize Time": 87193
+  }, 
+  "178": {
+    "Monopolize Time": 427128
+  }, 
+  "179": {
+    "Monopolize Time": 90831
+  }, 
+  "180": {
+    "Monopolize Time": 27930
+  }, 
+  "181": {
+    "Monopolize Time": 136629
+  }, 
+  "182": {
+    "Monopolize Time": 11313798
+  }, 
+  "183": {
+    "Monopolize Time": 556702
+  }, 
+  "184": {
+    "Monopolize Time": 391199
+  }, 
+  "185": {
+    "Monopolize Time": 98816
+  }, 
+  "186": {
+    "Monopolize Time": 158223
+  }, 
+  "187": {
+    "Monopolize Time": 131769
+  }, 
+  "188": {
+    "Monopolize Time": 1357796
+  }, 
+  "189": {
+    "Monopolize Time": 267970
+  }, 
+  "190": {
+    "Monopolize Time": 53905
+  }, 
+  "191": {
+    "Monopolize Time": 139470
+  }, 
+  "192": {
+    "Monopolize Time": 811709
+  }, 
+  "193": {
+    "Monopolize Time": 187370
+  }, 
+  "194": {
+    "Monopolize Time": 262326
+  }, 
+  "195": {
+    "Monopolize Time": 140005
+  }, 
+  "196": {
+    "Monopolize Time": 515515
+  }, 
+  "197": {
+    "Monopolize Time": 2759294
+  }, 
+  "198": {
+    "Monopolize Time": 61750
+  }, 
+  "199": {
+    "Monopolize Time": 125840
+  }
+}

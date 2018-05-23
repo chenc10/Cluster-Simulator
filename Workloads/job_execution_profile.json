@@ -1,0 +1,1402 @@
+{
+  "0": {
+    "alloc": 2000.0, 
+    "demand": 1, 
+    "duration": 2999, 
+    "execution_time": 2999, 
+    "progress_rate": 0.0
+  }, 
+  "1": {
+    "alloc": 20.0, 
+    "demand": 20, 
+    "duration": 238412, 
+    "execution_time": 237217, 
+    "progress_rate": 1.0
+  }, 
+  "2": {
+    "alloc": 22.0, 
+    "demand": 30, 
+    "duration": 256341, 
+    "execution_time": 255304, 
+    "progress_rate": 1.0
+  }, 
+  "3": {
+    "alloc": 22.0, 
+    "demand": 40, 
+    "duration": 3612438, 
+    "execution_time": 3611260, 
+    "progress_rate": 1.0
+  }, 
+  "4": {
+    "alloc": 8.0, 
+    "demand": 50, 
+    "duration": 439502.0, 
+    "execution_time": 438329.0, 
+    "progress_rate": 0.31368446988449317
+  }, 
+  "5": {
+    "alloc": 4.0, 
+    "demand": 60, 
+    "duration": 294784.0, 
+    "execution_time": 293749.0, 
+    "progress_rate": 0.07924792935465312
+  }, 
+  "6": {
+    "alloc": 4.0, 
+    "demand": 70, 
+    "duration": 2257143.4615384615, 
+    "execution_time": 2256000.4615384615, 
+    "progress_rate": 0.11424554400323023
+  }, 
+  "7": {
+    "alloc": 22.0, 
+    "demand": 80, 
+    "duration": 226203.0, 
+    "execution_time": 225034.0, 
+    "progress_rate": 0.888265773172054
+  }, 
+  "8": {
+    "alloc": 4.0, 
+    "demand": 90, 
+    "duration": 3288592.6923076925, 
+    "execution_time": 3287409.6923076925, 
+    "progress_rate": 0.07380491715642566
+  }, 
+  "9": {
+    "alloc": 8.0, 
+    "demand": 100, 
+    "duration": 391513.75, 
+    "execution_time": 390342.75, 
+    "progress_rate": 0.32696136920693414
+  }, 
+  "10": {
+    "alloc": 8.0, 
+    "demand": 110, 
+    "duration": 352154.75, 
+    "execution_time": 350995.75, 
+    "progress_rate": 0.38888220156511866
+  }, 
+  "11": {
+    "alloc": 26.0, 
+    "demand": 120, 
+    "duration": 477535, 
+    "execution_time": 476495, 
+    "progress_rate": 1.0
+  }, 
+  "12": {
+    "alloc": 8.0, 
+    "demand": 130, 
+    "duration": 1935317.5, 
+    "execution_time": 1934287.5, 
+    "progress_rate": 0.25550183206994825
+  }, 
+  "13": {
+    "alloc": 22.0, 
+    "demand": 140, 
+    "duration": 48857.0, 
+    "execution_time": 47838.0, 
+    "progress_rate": 0.7169614114302437
+  }, 
+  "14": {
+    "alloc": 5.0, 
+    "demand": 150, 
+    "duration": 7471844.0, 
+    "execution_time": 7470805.0, 
+    "progress_rate": 0.2604910715779625
+  }, 
+  "15": {
+    "alloc": 4.0, 
+    "demand": 160, 
+    "duration": 9424576.5, 
+    "execution_time": 9423384.5, 
+    "progress_rate": 0.0696556529132394
+  }, 
+  "16": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 1251575.5384615383, 
+    "execution_time": 1250385.5384615383, 
+    "progress_rate": 0.05338353487527417
+  }, 
+  "17": {
+    "alloc": 5.0, 
+    "demand": 180, 
+    "duration": 9377807.0, 
+    "execution_time": 9376689.0, 
+    "progress_rate": 0.14358554496155307
+  }, 
+  "18": {
+    "alloc": 8.0, 
+    "demand": 190, 
+    "duration": 1002713.625, 
+    "execution_time": 1001534.625, 
+    "progress_rate": 0.43347877263853957
+  }, 
+  "19": {
+    "alloc": 22.0, 
+    "demand": 200, 
+    "duration": 9243821, 
+    "execution_time": 9242726, 
+    "progress_rate": 1.0
+  }, 
+  "20": {
+    "alloc": 8.0, 
+    "demand": 10, 
+    "duration": 50643, 
+    "execution_time": 49476, 
+    "progress_rate": 1.0
+  }, 
+  "21": {
+    "alloc": 8.0, 
+    "demand": 20, 
+    "duration": 4380186.0, 
+    "execution_time": 4379114.0, 
+    "progress_rate": 0.5923801024590819
+  }, 
+  "22": {
+    "alloc": 26.0, 
+    "demand": 30, 
+    "duration": 1850070, 
+    "execution_time": 1849011, 
+    "progress_rate": 1.0
+  }, 
+  "23": {
+    "alloc": 5.0, 
+    "demand": 40, 
+    "duration": 345129.0, 
+    "execution_time": 344079.0, 
+    "progress_rate": 0.42037729707421845
+  }, 
+  "24": {
+    "alloc": 8.0, 
+    "demand": 50, 
+    "duration": 921862, 
+    "execution_time": 920826, 
+    "progress_rate": 1.0
+  }, 
+  "25": {
+    "alloc": 22.0, 
+    "demand": 60, 
+    "duration": 6017878, 
+    "execution_time": 6016850, 
+    "progress_rate": 1.0
+  }, 
+  "26": {
+    "alloc": 5.0, 
+    "demand": 70, 
+    "duration": 387730.0, 
+    "execution_time": 386705.0, 
+    "progress_rate": 0.09381311335514152
+  }, 
+  "27": {
+    "alloc": 26.0, 
+    "demand": 80, 
+    "duration": 185518, 
+    "execution_time": 184381, 
+    "progress_rate": 1.0
+  }, 
+  "28": {
+    "alloc": 5.0, 
+    "demand": 90, 
+    "duration": 390556.92307692306, 
+    "execution_time": 389545.92307692306, 
+    "progress_rate": 0.10098680969183647
+  }, 
+  "29": {
+    "alloc": 22.0, 
+    "demand": 100, 
+    "duration": 94082.0, 
+    "execution_time": 93077.0, 
+    "progress_rate": 0.8748240703933302
+  }, 
+  "30": {
+    "alloc": 5.0, 
+    "demand": 110, 
+    "duration": 508630.69230769225, 
+    "execution_time": 507598.69230769225, 
+    "progress_rate": 0.08221849392531927
+  }, 
+  "31": {
+    "alloc": 5.0, 
+    "demand": 120, 
+    "duration": 6822217.888888889, 
+    "execution_time": 6821032.888888889, 
+    "progress_rate": 0.09972463277637196
+  }, 
+  "32": {
+    "alloc": 5.0, 
+    "demand": 130, 
+    "duration": 8660176.375, 
+    "execution_time": 8659022.375, 
+    "progress_rate": 0.09700148164820974
+  }, 
+  "33": {
+    "alloc": 22.0, 
+    "demand": 140, 
+    "duration": 132916.5, 
+    "execution_time": 131786.5, 
+    "progress_rate": 0.8783069586034988
+  }, 
+  "34": {
+    "alloc": 4.0, 
+    "demand": 150, 
+    "duration": 3340023.0, 
+    "execution_time": 3338900.0, 
+    "progress_rate": 0.05200515139716673
+  }, 
+  "35": {
+    "alloc": 3.0, 
+    "demand": 160, 
+    "duration": 2280058.0, 
+    "execution_time": 2278942.0, 
+    "progress_rate": 0.028005100612477192
+  }, 
+  "36": {
+    "alloc": 26.0, 
+    "demand": 170, 
+    "duration": 1427229, 
+    "execution_time": 1426119, 
+    "progress_rate": 1.0
+  }, 
+  "37": {
+    "alloc": 8.0, 
+    "demand": 180, 
+    "duration": 1405403.0, 
+    "execution_time": 1404298.0, 
+    "progress_rate": 0.5734573430995415
+  }, 
+  "38": {
+    "alloc": 5.0, 
+    "demand": 190, 
+    "duration": 3922592.153846154, 
+    "execution_time": 3921494.153846154, 
+    "progress_rate": 0.05487908219598558
+  }, 
+  "39": {
+    "alloc": 5.0, 
+    "demand": 200, 
+    "duration": 28701252.0, 
+    "execution_time": 28700159.0, 
+    "progress_rate": 0.17948548647413418
+  }, 
+  "40": {
+    "alloc": 5.0, 
+    "demand": 10, 
+    "duration": 189284.3076923077, 
+    "execution_time": 188196.3076923077, 
+    "progress_rate": 0.6289390129455659
+  }, 
+  "41": {
+    "alloc": 5.0, 
+    "demand": 20, 
+    "duration": 701856.2222222222, 
+    "execution_time": 700774.2222222222, 
+    "progress_rate": 0.4416358224744441
+  }, 
+  "42": {
+    "alloc": 4.0, 
+    "demand": 30, 
+    "duration": 431644.0, 
+    "execution_time": 430569.0, 
+    "progress_rate": 0.14374002773074698
+  }, 
+  "43": {
+    "alloc": 8.0, 
+    "demand": 40, 
+    "duration": 110913.0, 
+    "execution_time": 109843.0, 
+    "progress_rate": 0.5920905292098723
+  }, 
+  "44": {
+    "alloc": 3.0, 
+    "demand": 50, 
+    "duration": 6084546.0, 
+    "execution_time": 6083481.0, 
+    "progress_rate": 0.06911108952259405
+  }, 
+  "45": {
+    "alloc": 5.0, 
+    "demand": 60, 
+    "duration": 17960070.0, 
+    "execution_time": 17958914.0, 
+    "progress_rate": 0.182167975190482
+  }, 
+  "46": {
+    "alloc": 5.0, 
+    "demand": 70, 
+    "duration": 3159784.6923076925, 
+    "execution_time": 3158731.6923076925, 
+    "progress_rate": 0.12339572903554863
+  }, 
+  "47": {
+    "alloc": 4.0, 
+    "demand": 80, 
+    "duration": 47575657.0, 
+    "execution_time": 47574609.0, 
+    "progress_rate": 0.06302128515654222
+  }, 
+  "48": {
+    "alloc": 4.0, 
+    "demand": 90, 
+    "duration": 2346968.25, 
+    "execution_time": 2345927.25, 
+    "progress_rate": 0.08201021578993978
+  }, 
+  "49": {
+    "alloc": 7.0, 
+    "demand": 100, 
+    "duration": 354827.875, 
+    "execution_time": 353829.875, 
+    "progress_rate": 0.4438178093356306
+  }, 
+  "50": {
+    "alloc": 22.0, 
+    "demand": 110, 
+    "duration": 1115634, 
+    "execution_time": 1114601, 
+    "progress_rate": 1.0
+  }, 
+  "51": {
+    "alloc": 8.0, 
+    "demand": 120, 
+    "duration": 3721812.111111111, 
+    "execution_time": 3720781.111111111, 
+    "progress_rate": 0.1621326226900385
+  }, 
+  "52": {
+    "alloc": 8.0, 
+    "demand": 130, 
+    "duration": 8143776.111111111, 
+    "execution_time": 8142750.111111111, 
+    "progress_rate": 0.14819096540288443
+  }, 
+  "53": {
+    "alloc": 22.0, 
+    "demand": 140, 
+    "duration": 15028406, 
+    "execution_time": 15027267, 
+    "progress_rate": 1.0
+  }, 
+  "54": {
+    "alloc": 5.0, 
+    "demand": 150, 
+    "duration": 3109213.0, 
+    "execution_time": 3108190.0, 
+    "progress_rate": 0.051819225980393735
+  }, 
+  "55": {
+    "alloc": 4.0, 
+    "demand": 160, 
+    "duration": 12780715.0, 
+    "execution_time": 12779695.0, 
+    "progress_rate": 0.03354008057312792
+  }, 
+  "56": {
+    "alloc": 4.0, 
+    "demand": 170, 
+    "duration": 2025457.3076923073, 
+    "execution_time": 2024440.3076923073, 
+    "progress_rate": 0.0410310937222383
+  }, 
+  "57": {
+    "alloc": 7.0, 
+    "demand": 180, 
+    "duration": 945825.2222222222, 
+    "execution_time": 944812.2222222222, 
+    "progress_rate": 0.1087475347835137
+  }, 
+  "58": {
+    "alloc": 4.0, 
+    "demand": 190, 
+    "duration": 20798267.0, 
+    "execution_time": 20797258.0, 
+    "progress_rate": 0.029461479970099905
+  }, 
+  "59": {
+    "alloc": 7.0, 
+    "demand": 200, 
+    "duration": 1472083.25, 
+    "execution_time": 1471075.25, 
+    "progress_rate": 0.0838475122193783
+  }, 
+  "60": {
+    "alloc": 8.0, 
+    "demand": 10, 
+    "duration": 518940.5, 
+    "execution_time": 517807.5, 
+    "progress_rate": 0.9449515505279472
+  }, 
+  "61": {
+    "alloc": 7.0, 
+    "demand": 20, 
+    "duration": 135039.25, 
+    "execution_time": 134036.25, 
+    "progress_rate": 0.729847336075129
+  }, 
+  "62": {
+    "alloc": 4.0, 
+    "demand": 30, 
+    "duration": 1022259.0, 
+    "execution_time": 1021244.0, 
+    "progress_rate": 0.14102898034162256
+  }, 
+  "63": {
+    "alloc": 8.0, 
+    "demand": 40, 
+    "duration": 522331.3076923077, 
+    "execution_time": 521135.3076923077, 
+    "progress_rate": 0.8136293851928903
+  }, 
+  "64": {
+    "alloc": 8.0, 
+    "demand": 50, 
+    "duration": 392933, 
+    "execution_time": 391751, 
+    "progress_rate": 1.0
+  }, 
+  "65": {
+    "alloc": 4.0, 
+    "demand": 60, 
+    "duration": 1134169.0, 
+    "execution_time": 1133003.0, 
+    "progress_rate": 0.13613203142445343
+  }, 
+  "66": {
+    "alloc": 4.0, 
+    "demand": 70, 
+    "duration": 5297643.692307692, 
+    "execution_time": 5296494.692307692, 
+    "progress_rate": 0.0900150057154637
+  }, 
+  "67": {
+    "alloc": 4.0, 
+    "demand": 80, 
+    "duration": 2403977.307692307, 
+    "execution_time": 2402786.307692307, 
+    "progress_rate": 0.08771649785303744
+  }, 
+  "68": {
+    "alloc": 3.0, 
+    "demand": 90, 
+    "duration": 4749958.0, 
+    "execution_time": 4748830.0, 
+    "progress_rate": 0.05007696632644251
+  }, 
+  "69": {
+    "alloc": 22.0, 
+    "demand": 100, 
+    "duration": 36412.25, 
+    "execution_time": 35287.25, 
+    "progress_rate": 0.8454328404735422
+  }, 
+  "70": {
+    "alloc": 22.0, 
+    "demand": 110, 
+    "duration": 852930, 
+    "execution_time": 851743, 
+    "progress_rate": 1.0
+  }, 
+  "71": {
+    "alloc": 22.0, 
+    "demand": 120, 
+    "duration": 111313.77777777778, 
+    "execution_time": 110194.77777777778, 
+    "progress_rate": 0.8896428848715355
+  }, 
+  "72": {
+    "alloc": 5.0, 
+    "demand": 130, 
+    "duration": 1025743.2222222222, 
+    "execution_time": 1024629.2222222222, 
+    "progress_rate": 0.08007481947670393
+  }, 
+  "73": {
+    "alloc": 5.0, 
+    "demand": 140, 
+    "duration": 2857491.076923076, 
+    "execution_time": 2856379.076923076, 
+    "progress_rate": 0.06565165020113686
+  }, 
+  "74": {
+    "alloc": 3.0, 
+    "demand": 150, 
+    "duration": 802993.0, 
+    "execution_time": 801885.0, 
+    "progress_rate": 0.027475261415290223
+  }, 
+  "75": {
+    "alloc": 22.0, 
+    "demand": 160, 
+    "duration": 3198468, 
+    "execution_time": 3197288, 
+    "progress_rate": 1.0
+  }, 
+  "76": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 3032700.0, 
+    "execution_time": 3031597.0, 
+    "progress_rate": 0.2765308185751602
+  }, 
+  "77": {
+    "alloc": 5.0, 
+    "demand": 180, 
+    "duration": 2150009.777777778, 
+    "execution_time": 2148909.777777778, 
+    "progress_rate": 0.06650907426546215
+  }, 
+  "78": {
+    "alloc": 22.0, 
+    "demand": 190, 
+    "duration": 401578, 
+    "execution_time": 400402, 
+    "progress_rate": 1.0
+  }, 
+  "79": {
+    "alloc": 22.0, 
+    "demand": 200, 
+    "duration": 143559.0, 
+    "execution_time": 142463.0, 
+    "progress_rate": 0.4256473610691899
+  }, 
+  "80": {
+    "alloc": 5.0, 
+    "demand": 10, 
+    "duration": 848436.2222222222, 
+    "execution_time": 847345.2222222222, 
+    "progress_rate": 0.6809243562934535
+  }, 
+  "81": {
+    "alloc": 4.0, 
+    "demand": 20, 
+    "duration": 788031.923076923, 
+    "execution_time": 786941.923076923, 
+    "progress_rate": 0.2904343933112062
+  }, 
+  "82": {
+    "alloc": 5.0, 
+    "demand": 30, 
+    "duration": 1210498.076923077, 
+    "execution_time": 1209412.076923077, 
+    "progress_rate": 0.24847527632148284
+  }, 
+  "83": {
+    "alloc": 8.0, 
+    "demand": 40, 
+    "duration": 384309.25, 
+    "execution_time": 383226.25, 
+    "progress_rate": 0.5735802283898872
+  }, 
+  "84": {
+    "alloc": 5.0, 
+    "demand": 50, 
+    "duration": 494475.07692307694, 
+    "execution_time": 493395.07692307694, 
+    "progress_rate": 0.17282701832327846
+  }, 
+  "85": {
+    "alloc": 5.0, 
+    "demand": 60, 
+    "duration": 24563036.22222222, 
+    "execution_time": 24561959.22222222, 
+    "progress_rate": 0.1534319378150584
+  }, 
+  "86": {
+    "alloc": 3.0, 
+    "demand": 70, 
+    "duration": 5363207.0, 
+    "execution_time": 5362043.0, 
+    "progress_rate": 0.05175620561043617
+  }, 
+  "87": {
+    "alloc": 5.0, 
+    "demand": 80, 
+    "duration": 832468.7692307691, 
+    "execution_time": 831395.7692307691, 
+    "progress_rate": 0.10611071557607712
+  }, 
+  "88": {
+    "alloc": 8.0, 
+    "demand": 90, 
+    "duration": 735136.7692307694, 
+    "execution_time": 734068.7692307694, 
+    "progress_rate": 0.39800903164176393
+  }, 
+  "89": {
+    "alloc": 26.0, 
+    "demand": 100, 
+    "duration": 1237874, 
+    "execution_time": 1236807, 
+    "progress_rate": 1.0
+  }, 
+  "90": {
+    "alloc": 22.0, 
+    "demand": 110, 
+    "duration": 1279831, 
+    "execution_time": 1278768, 
+    "progress_rate": 1.0
+  }, 
+  "91": {
+    "alloc": 22.0, 
+    "demand": 120, 
+    "duration": 265990, 
+    "execution_time": 264930, 
+    "progress_rate": 1.0
+  }, 
+  "92": {
+    "alloc": 8.0, 
+    "demand": 130, 
+    "duration": 140181.75, 
+    "execution_time": 139123.75, 
+    "progress_rate": 0.29026675891068204
+  }, 
+  "93": {
+    "alloc": 8.0, 
+    "demand": 140, 
+    "duration": 30527602.33333333, 
+    "execution_time": 30526547.33333333, 
+    "progress_rate": 0.1588768604271242
+  }, 
+  "94": {
+    "alloc": 22.0, 
+    "demand": 150, 
+    "duration": 122379, 
+    "execution_time": 121328, 
+    "progress_rate": 1.0
+  }, 
+  "95": {
+    "alloc": 8.0, 
+    "demand": 160, 
+    "duration": 2642548.5555555555, 
+    "execution_time": 2641398.5555555555, 
+    "progress_rate": 0.13256348583349384
+  }, 
+  "96": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 8216211.625, 
+    "execution_time": 8215165.625, 
+    "progress_rate": 0.06686779367275386
+  }, 
+  "97": {
+    "alloc": 8.0, 
+    "demand": 180, 
+    "duration": 172117.25, 
+    "execution_time": 171074.25, 
+    "progress_rate": 0.2041686577611768
+  }, 
+  "98": {
+    "alloc": 4.0, 
+    "demand": 190, 
+    "duration": 10890633.0, 
+    "execution_time": 10889486.0, 
+    "progress_rate": 0.03292414352706822
+  }, 
+  "99": {
+    "alloc": 7.0, 
+    "demand": 200, 
+    "duration": 262612.5, 
+    "execution_time": 261611.5, 
+    "progress_rate": 0.3044858502015393
+  }, 
+  "100": {
+    "alloc": 8.0, 
+    "demand": 10, 
+    "duration": 44175.555555555555, 
+    "execution_time": 43141.555555555555, 
+    "progress_rate": 0.80667003198772
+  }, 
+  "101": {
+    "alloc": 5.0, 
+    "demand": 20, 
+    "duration": 538984.0, 
+    "execution_time": 537840.0, 
+    "progress_rate": 0.4055574148445634
+  }, 
+  "102": {
+    "alloc": 8.0, 
+    "demand": 30, 
+    "duration": 534540.25, 
+    "execution_time": 533398.25, 
+    "progress_rate": 0.6405982771784496
+  }, 
+  "103": {
+    "alloc": 26.0, 
+    "demand": 40, 
+    "duration": 72943, 
+    "execution_time": 71914, 
+    "progress_rate": 1.0
+  }, 
+  "104": {
+    "alloc": 22.0, 
+    "demand": 50, 
+    "duration": 167060, 
+    "execution_time": 166033, 
+    "progress_rate": 1.0
+  }, 
+  "105": {
+    "alloc": 8.0, 
+    "demand": 60, 
+    "duration": 400497.22222222225, 
+    "execution_time": 399356.22222222225, 
+    "progress_rate": 0.2743415374633507
+  }, 
+  "106": {
+    "alloc": 3.0, 
+    "demand": 70, 
+    "duration": 2945508.0, 
+    "execution_time": 2944368.0, 
+    "progress_rate": 0.05436990213179874
+  }, 
+  "107": {
+    "alloc": 22.0, 
+    "demand": 80, 
+    "duration": 198670, 
+    "execution_time": 197532, 
+    "progress_rate": 1.0
+  }, 
+  "108": {
+    "alloc": 5.0, 
+    "demand": 90, 
+    "duration": 695275.6153846154, 
+    "execution_time": 694251.6153846154, 
+    "progress_rate": 0.12188232353355373
+  }, 
+  "109": {
+    "alloc": 22.0, 
+    "demand": 100, 
+    "duration": 640399, 
+    "execution_time": 639377, 
+    "progress_rate": 1.0
+  }, 
+  "110": {
+    "alloc": 7.0, 
+    "demand": 110, 
+    "duration": 507176.25, 
+    "execution_time": 506155.25, 
+    "progress_rate": 0.4421726337917072
+  }, 
+  "111": {
+    "alloc": 5.0, 
+    "demand": 120, 
+    "duration": 1336679.3846153845, 
+    "execution_time": 1335661.3846153845, 
+    "progress_rate": 0.08016702529049567
+  }, 
+  "112": {
+    "alloc": 5.0, 
+    "demand": 130, 
+    "duration": 318168.5, 
+    "execution_time": 317032.5, 
+    "progress_rate": 0.08336684724752194
+  }, 
+  "113": {
+    "alloc": 5.0, 
+    "demand": 140, 
+    "duration": 423965.5, 
+    "execution_time": 422949.5, 
+    "progress_rate": 0.17216239763848876
+  }, 
+  "114": {
+    "alloc": 22.0, 
+    "demand": 150, 
+    "duration": 150889, 
+    "execution_time": 149875, 
+    "progress_rate": 1.0
+  }, 
+  "115": {
+    "alloc": 4.0, 
+    "demand": 160, 
+    "duration": 8830961.0, 
+    "execution_time": 8829949.0, 
+    "progress_rate": 0.03387448783679271
+  }, 
+  "116": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 1281286.8888888892, 
+    "execution_time": 1280276.8888888892, 
+    "progress_rate": 0.08254308182639657
+  }, 
+  "117": {
+    "alloc": 5.0, 
+    "demand": 180, 
+    "duration": 9786738.0, 
+    "execution_time": 9785603.0, 
+    "progress_rate": 0.038955698488892306
+  }, 
+  "118": {
+    "alloc": 22.0, 
+    "demand": 190, 
+    "duration": 6357645, 
+    "execution_time": 6356511, 
+    "progress_rate": 1.0
+  }, 
+  "119": {
+    "alloc": 7.0, 
+    "demand": 200, 
+    "duration": 213926.5, 
+    "execution_time": 212920.5, 
+    "progress_rate": 0.20315094131377673
+  }, 
+  "120": {
+    "alloc": 10.0, 
+    "demand": 10, 
+    "duration": 148593, 
+    "execution_time": 147589, 
+    "progress_rate": 1.0
+  }, 
+  "121": {
+    "alloc": 8.0, 
+    "demand": 20, 
+    "duration": 917595.7777777778, 
+    "execution_time": 916463.7777777778, 
+    "progress_rate": 0.5862544849320589
+  }, 
+  "122": {
+    "alloc": 5.0, 
+    "demand": 30, 
+    "duration": 463675.53846153844, 
+    "execution_time": 462544.53846153844, 
+    "progress_rate": 0.2727802179216338
+  }, 
+  "123": {
+    "alloc": 4.0, 
+    "demand": 40, 
+    "duration": 1714624.5, 
+    "execution_time": 1713622.5, 
+    "progress_rate": 0.19916872006524192
+  }, 
+  "124": {
+    "alloc": 5.0, 
+    "demand": 50, 
+    "duration": 52538.0, 
+    "execution_time": 51539.0, 
+    "progress_rate": 0.3644230582665554
+  }, 
+  "125": {
+    "alloc": 22.0, 
+    "demand": 60, 
+    "duration": 503283, 
+    "execution_time": 502162, 
+    "progress_rate": 1.0
+  }, 
+  "126": {
+    "alloc": 4.0, 
+    "demand": 70, 
+    "duration": 36006396.92307692, 
+    "execution_time": 36005389.92307692, 
+    "progress_rate": 0.10196173428042886
+  }, 
+  "127": {
+    "alloc": 5.0, 
+    "demand": 80, 
+    "duration": 2038639.0, 
+    "execution_time": 2037639.0, 
+    "progress_rate": 0.11881054494932615
+  }, 
+  "128": {
+    "alloc": 5.0, 
+    "demand": 90, 
+    "duration": 1554300.0, 
+    "execution_time": 1553178.0, 
+    "progress_rate": 0.17905996608244515
+  }, 
+  "129": {
+    "alloc": 22.0, 
+    "demand": 100, 
+    "duration": 106674, 
+    "execution_time": 105554, 
+    "progress_rate": 1.0
+  }, 
+  "130": {
+    "alloc": 8.0, 
+    "demand": 110, 
+    "duration": 133357.75, 
+    "execution_time": 132189.75, 
+    "progress_rate": 0.3060902982266023
+  }, 
+  "131": {
+    "alloc": 22.0, 
+    "demand": 120, 
+    "duration": 73182.0, 
+    "execution_time": 72020.0, 
+    "progress_rate": 0.5678839211330186
+  }, 
+  "132": {
+    "alloc": 22.0, 
+    "demand": 130, 
+    "duration": 57501.0, 
+    "execution_time": 56348.0, 
+    "progress_rate": 0.858451054163413
+  }, 
+  "133": {
+    "alloc": 26.0, 
+    "demand": 140, 
+    "duration": 1161977, 
+    "execution_time": 1160783, 
+    "progress_rate": 1.0
+  }, 
+  "134": {
+    "alloc": 26.0, 
+    "demand": 150, 
+    "duration": 565937, 
+    "execution_time": 564744, 
+    "progress_rate": 1.0
+  }, 
+  "135": {
+    "alloc": 5.0, 
+    "demand": 160, 
+    "duration": 31947641.111111112, 
+    "execution_time": 31946452.111111112, 
+    "progress_rate": 0.0879429737683721
+  }, 
+  "136": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 48918127.99999999, 
+    "execution_time": 48916998.99999999, 
+    "progress_rate": 0.07741018618088163
+  }, 
+  "137": {
+    "alloc": 8.0, 
+    "demand": 180, 
+    "duration": 750107.5, 
+    "execution_time": 748980.5, 
+    "progress_rate": 0.2314359319101098
+  }, 
+  "138": {
+    "alloc": 8.0, 
+    "demand": 190, 
+    "duration": 3798932.6666666665, 
+    "execution_time": 3797806.6666666665, 
+    "progress_rate": 0.12749464164403665
+  }, 
+  "139": {
+    "alloc": 22.0, 
+    "demand": 200, 
+    "duration": 8234291, 
+    "execution_time": 8233167, 
+    "progress_rate": 1.0
+  }, 
+  "140": {
+    "alloc": 5.0, 
+    "demand": 10, 
+    "duration": 37045.25, 
+    "execution_time": 35857.25, 
+    "progress_rate": 0.8197226502311248
+  }, 
+  "141": {
+    "alloc": 4.0, 
+    "demand": 20, 
+    "duration": 1483678.0, 
+    "execution_time": 1482492.0, 
+    "progress_rate": 0.24409845044695014
+  }, 
+  "142": {
+    "alloc": 22.0, 
+    "demand": 30, 
+    "duration": 28088, 
+    "execution_time": 26904, 
+    "progress_rate": 1.0
+  }, 
+  "143": {
+    "alloc": 8.0, 
+    "demand": 40, 
+    "duration": 3089528.8461538465, 
+    "execution_time": 3088411.8461538465, 
+    "progress_rate": 0.47402194814890414
+  }, 
+  "144": {
+    "alloc": 8.0, 
+    "demand": 50, 
+    "duration": 465421.4615384615, 
+    "execution_time": 464306.4615384615, 
+    "progress_rate": 0.46154214457824944
+  }, 
+  "145": {
+    "alloc": 22.0, 
+    "demand": 60, 
+    "duration": 211726.5, 
+    "execution_time": 210613.5, 
+    "progress_rate": 0.9311416409679342
+  }, 
+  "146": {
+    "alloc": 8.0, 
+    "demand": 70, 
+    "duration": 78444.625, 
+    "execution_time": 77263.625, 
+    "progress_rate": 0.6014602602453613
+  }, 
+  "147": {
+    "alloc": 5.0, 
+    "demand": 80, 
+    "duration": 844662.7777777776, 
+    "execution_time": 843551.7777777776, 
+    "progress_rate": 0.1446313115733132
+  }, 
+  "148": {
+    "alloc": 8.0, 
+    "demand": 90, 
+    "duration": 223371.0, 
+    "execution_time": 222262.0, 
+    "progress_rate": 0.5208492679810314
+  }, 
+  "149": {
+    "alloc": 8.0, 
+    "demand": 100, 
+    "duration": 11307678.875, 
+    "execution_time": 11306571.875, 
+    "progress_rate": 0.1576148827161637
+  }, 
+  "150": {
+    "alloc": 5.0, 
+    "demand": 110, 
+    "duration": 242868.55555555553, 
+    "execution_time": 241762.55555555553, 
+    "progress_rate": 0.09673954656152525
+  }, 
+  "151": {
+    "alloc": 5.0, 
+    "demand": 120, 
+    "duration": 188107.25, 
+    "execution_time": 186930.25, 
+    "progress_rate": 0.21412264735108416
+  }, 
+  "152": {
+    "alloc": 4.0, 
+    "demand": 130, 
+    "duration": 7629190.0, 
+    "execution_time": 7628086.0, 
+    "progress_rate": 0.0472629700294412
+  }, 
+  "153": {
+    "alloc": 4.0, 
+    "demand": 140, 
+    "duration": 8412980.375, 
+    "execution_time": 8411878.375, 
+    "progress_rate": 0.07183163772265073
+  }, 
+  "154": {
+    "alloc": 22.0, 
+    "demand": 150, 
+    "duration": 67300.875, 
+    "execution_time": 66199.875, 
+    "progress_rate": 0.7300769072449155
+  }, 
+  "155": {
+    "alloc": 3.0, 
+    "demand": 160, 
+    "duration": 19007726.0, 
+    "execution_time": 19006627.0, 
+    "progress_rate": 0.025711821461009362
+  }, 
+  "156": {
+    "alloc": 4.0, 
+    "demand": 170, 
+    "duration": 5514954.0, 
+    "execution_time": 5513857.0, 
+    "progress_rate": 0.028666866043134596
+  }, 
+  "157": {
+    "alloc": 8.0, 
+    "demand": 180, 
+    "duration": 354263.25, 
+    "execution_time": 353088.25, 
+    "progress_rate": 0.3317102735647533
+  }, 
+  "158": {
+    "alloc": 8.0, 
+    "demand": 190, 
+    "duration": 555001.7692307691, 
+    "execution_time": 553827.7692307691, 
+    "progress_rate": 0.3459378721043658
+  }, 
+  "159": {
+    "alloc": 5.0, 
+    "demand": 200, 
+    "duration": 2702629.3333333335, 
+    "execution_time": 2701535.3333333335, 
+    "progress_rate": 0.06462880490427295
+  }, 
+  "160": {
+    "alloc": 4.0, 
+    "demand": 10, 
+    "duration": 662087.7692307692, 
+    "execution_time": 660995.7692307692, 
+    "progress_rate": 0.47779428356634424
+  }, 
+  "161": {
+    "alloc": 20.0, 
+    "demand": 20, 
+    "duration": 387831, 
+    "execution_time": 386659, 
+    "progress_rate": 1.0
+  }, 
+  "162": {
+    "alloc": 8.0, 
+    "demand": 30, 
+    "duration": 419076.88888888893, 
+    "execution_time": 417906.88888888893, 
+    "progress_rate": 0.451131591779349
+  }, 
+  "163": {
+    "alloc": 4.0, 
+    "demand": 40, 
+    "duration": 217960.0, 
+    "execution_time": 216871.0, 
+    "progress_rate": 0.13679099556879434
+  }, 
+  "164": {
+    "alloc": 22.0, 
+    "demand": 50, 
+    "duration": 406509, 
+    "execution_time": 405422, 
+    "progress_rate": 1.0
+  }, 
+  "165": {
+    "alloc": 8.0, 
+    "demand": 60, 
+    "duration": 1025232.25, 
+    "execution_time": 1024147.25, 
+    "progress_rate": 0.22577026887491033
+  }, 
+  "166": {
+    "alloc": 8.0, 
+    "demand": 70, 
+    "duration": 287882.0, 
+    "execution_time": 286798.0, 
+    "progress_rate": 0.2802530003695981
+  }, 
+  "167": {
+    "alloc": 5.0, 
+    "demand": 80, 
+    "duration": 1450471.5, 
+    "execution_time": 1449306.5, 
+    "progress_rate": 0.2599746844439047
+  }, 
+  "168": {
+    "alloc": 4.0, 
+    "demand": 90, 
+    "duration": 4732589.0, 
+    "execution_time": 4731508.0, 
+    "progress_rate": 0.05773465880222542
+  }, 
+  "169": {
+    "alloc": 5.0, 
+    "demand": 100, 
+    "duration": 4923093.846153846, 
+    "execution_time": 4922014.846153846, 
+    "progress_rate": 0.12735048950325895
+  }, 
+  "170": {
+    "alloc": 8.0, 
+    "demand": 110, 
+    "duration": 1245239.0, 
+    "execution_time": 1244161.0, 
+    "progress_rate": 0.15210973499410446
+  }, 
+  "171": {
+    "alloc": 8.0, 
+    "demand": 120, 
+    "duration": 317171.75, 
+    "execution_time": 316095.75, 
+    "progress_rate": 0.1307578478989357
+  }, 
+  "172": {
+    "alloc": 8.0, 
+    "demand": 130, 
+    "duration": 2590632.625, 
+    "execution_time": 2589558.625, 
+    "progress_rate": 0.3109020171342906
+  }, 
+  "173": {
+    "alloc": 8.0, 
+    "demand": 140, 
+    "duration": 3201322.0, 
+    "execution_time": 3200159.0, 
+    "progress_rate": 0.920607382320691
+  }, 
+  "174": {
+    "alloc": 8.0, 
+    "demand": 150, 
+    "duration": 378084.75, 
+    "execution_time": 376923.75, 
+    "progress_rate": 0.24594894856055105
+  }, 
+  "175": {
+    "alloc": 8.0, 
+    "demand": 160, 
+    "duration": 1263057.0769230765, 
+    "execution_time": 1261986.0769230765, 
+    "progress_rate": 0.6825471498862692
+  }, 
+  "176": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 7600514.0, 
+    "execution_time": 7599445.0, 
+    "progress_rate": 0.12949195632049446
+  }, 
+  "177": {
+    "alloc": 8.0, 
+    "demand": 180, 
+    "duration": 893214.75, 
+    "execution_time": 892054.75, 
+    "progress_rate": 0.4700529872185536
+  }, 
+  "178": {
+    "alloc": 5.0, 
+    "demand": 190, 
+    "duration": 7156269.25, 
+    "execution_time": 7155111.25, 
+    "progress_rate": 0.05966126662251408
+  }, 
+  "179": {
+    "alloc": 5.0, 
+    "demand": 200, 
+    "duration": 1419973.9999999998, 
+    "execution_time": 1418907.9999999998, 
+    "progress_rate": 0.04915611160131595
+  }, 
+  "180": {
+    "alloc": 8.0, 
+    "demand": 10, 
+    "duration": 39572.22222222222, 
+    "execution_time": 38508.22222222222, 
+    "progress_rate": 0.7862736385302995
+  }, 
+  "181": {
+    "alloc": 8.0, 
+    "demand": 20, 
+    "duration": 7655859, 
+    "execution_time": 7654797, 
+    "progress_rate": 1.0
+  }, 
+  "182": {
+    "alloc": 26.0, 
+    "demand": 30, 
+    "duration": 3533895, 
+    "execution_time": 3532834, 
+    "progress_rate": 1.0
+  }, 
+  "183": {
+    "alloc": 5.0, 
+    "demand": 40, 
+    "duration": 3960522.0, 
+    "execution_time": 3959365.0, 
+    "progress_rate": 0.1779724779099679
+  }, 
+  "184": {
+    "alloc": 8.0, 
+    "demand": 50, 
+    "duration": 732408.5, 
+    "execution_time": 731253.5, 
+    "progress_rate": 0.49150397228867965
+  }, 
+  "185": {
+    "alloc": 5.0, 
+    "demand": 60, 
+    "duration": 571359.625, 
+    "execution_time": 570302.625, 
+    "progress_rate": 0.1450159904138614
+  }, 
+  "186": {
+    "alloc": 4.0, 
+    "demand": 70, 
+    "duration": 2048445.0, 
+    "execution_time": 2047389.0, 
+    "progress_rate": 0.07151059227142473
+  }, 
+  "187": {
+    "alloc": 8.0, 
+    "demand": 80, 
+    "duration": 396635.75, 
+    "execution_time": 395581.75, 
+    "progress_rate": 0.38626655552234146
+  }, 
+  "188": {
+    "alloc": 8.0, 
+    "demand": 90, 
+    "duration": 906504.375, 
+    "execution_time": 905452.375, 
+    "progress_rate": 0.5320743677987481
+  }, 
+  "189": {
+    "alloc": 5.0, 
+    "demand": 100, 
+    "duration": 1389121.3846153847, 
+    "execution_time": 1387969.3846153847, 
+    "progress_rate": 0.07834971088366945
+  }, 
+  "190": {
+    "alloc": 22.0, 
+    "demand": 110, 
+    "duration": 94292, 
+    "execution_time": 93141, 
+    "progress_rate": 1.0
+  }, 
+  "191": {
+    "alloc": 8.0, 
+    "demand": 120, 
+    "duration": 119616.75, 
+    "execution_time": 118567.75, 
+    "progress_rate": 0.2776893379523521
+  }, 
+  "192": {
+    "alloc": 22.0, 
+    "demand": 130, 
+    "duration": 1274158, 
+    "execution_time": 1273111, 
+    "progress_rate": 1.0
+  }, 
+  "193": {
+    "alloc": 22.0, 
+    "demand": 140, 
+    "duration": 222249.375, 
+    "execution_time": 221204.375, 
+    "progress_rate": 0.7946813891000122
+  }, 
+  "194": {
+    "alloc": 22.0, 
+    "demand": 150, 
+    "duration": 345526.75, 
+    "execution_time": 344482.75, 
+    "progress_rate": 0.8180554759273142
+  }, 
+  "195": {
+    "alloc": 8.0, 
+    "demand": 160, 
+    "duration": 77982.0, 
+    "execution_time": 76940.0, 
+    "progress_rate": 0.37257603327268
+  }, 
+  "196": {
+    "alloc": 5.0, 
+    "demand": 170, 
+    "duration": 2540816.0, 
+    "execution_time": 2539668.0, 
+    "progress_rate": 0.11007304891820506
+  }, 
+  "197": {
+    "alloc": 5.0, 
+    "demand": 180, 
+    "duration": 8261987.875, 
+    "execution_time": 8260841.875, 
+    "progress_rate": 0.06858865095998463
+  }, 
+  "198": {
+    "alloc": 26.0, 
+    "demand": 190, 
+    "duration": 327797, 
+    "execution_time": 326652, 
+    "progress_rate": 1.0
+  }, 
+  "199": {
+    "alloc": 8.0, 
+    "demand": 200, 
+    "duration": 219599.5, 
+    "execution_time": 218561.5, 
+    "progress_rate": 0.20049734285315574
+  }
+}
